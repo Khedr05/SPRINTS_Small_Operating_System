@@ -210,6 +210,12 @@ EN_TIMER_ERROR_T TMR_ovfSetCallback(void (*void_a_pfOvfInterruptAction)(void));
 //void TIMER_tmr1Stop(void);
 //EN_TIMER_ERROR_T TIMER_tmr1CreatePWM(u8 u8_a_dutyCycle);
 
+EN_TIMER_ERROR_T TIMER_tmr1NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputEnable);
+void TIMER_tmr1CleareCompMatInit(void);
+EN_TIMER_ERROR_T TIMER_tmr1Start(Uint16_t u16_a_prescaler);
+void TIMER_tmr1Stop(void);
+void TIMER_tmr1deinit(void);
+
 /* ***********************************************************************************************/
 
 #endif /* TIMER_INTERFACE_H_ */

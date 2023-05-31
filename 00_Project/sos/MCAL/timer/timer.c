@@ -476,7 +476,122 @@ void TMR_TMR2Stop(void) {
 
 }*/
 
+/*********************************************************************************************************************/
 
+/**
+ * @brief Initializes timer1 at normal mode
+ *
+ * This function initializes/selects the timer_1 normal mode for the timer, and enable the ISR for this timer.
+ * @param[in] EN_TMR_INTERRPUT_T en_a_interrputEnable value to set the interrupt bit for timer_1 in the TIMSK reg.
+ *
+ * @return An EN_TMR_ERROR_T value indicating the success or failure of the operation
+ *         (TMR_OK if the operation succeeded, TMR_ERROR otherwise)
+ */
+EN_TIMER_ERROR_T TIMER_tmr1NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputEnable)
+{
+	switch (en_a_interrputEnable)
+	{
+	case ENABLED:
+		//* select the normal mode for the timer, timer is not start yet.*//*
+		CLEAR_BIT(TMR_U8_TCCR1A_REG, TMR_U8_WGM10_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1A_REG, TMR_U8_WGM11_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_WGM12_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_WGM13_BIT);
+		//*must be set for the non_PWM mode*//*
+		SET_BIT(TMR_U8_TCCR1A_REG, TMR_U8_FOC1A_BIT);
+		SET_BIT(TMR_U8_TCCR1A_REG, TMR_U8_FOC1B_BIT);
+		//*Enable the global interrupt enable bit.*//*
+		SET_BIT(TMR_U8_SREG_REG, GLOBAL_INTERRUPT_ENABLE_BIT);
+		//* Enable the interrupt for timer0 overflow.*//*
+		SET_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE1_BIT);
+		break;
+	case DISABLED:
+		//* select the normal mode for the timer, timer is not start yet.*//*
+		CLEAR_BIT(TMR_U8_TCCR1A_REG, TMR_U8_WGM10_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1A_REG, TMR_U8_WGM11_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_WGM12_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_WGM13_BIT);
+		//*must be set for the non_PWM mode*//*
+		SET_BIT(TMR_U8_TCCR1A_REG, TMR_U8_FOC1A_BIT);
+		SET_BIT(TMR_U8_TCCR1A_REG, TMR_U8_FOC1B_BIT);
+		break;
+	default:
+		return TIMER_ERROR;
+	}
+	return TIMER_OK;
+}
+
+/* ********************************************************************************************************************/
+
+/* *******************************************************************************************/
+/**
+ * @brief Start the timer by setting the desired prescaler.
+ *
+ * This function set the prescaler for timer_1.
+ * @param[in] u16 u16_a_prescaler value to set the desired prescaler.
+ *
+ * @return An EN_TMR_ERROR_T value indicating the success or failure of the operation
+ *         (TMR_OK if the operation succeeded, TMR_ERROR otherwise)
+ */
+EN_TIMER_ERROR_T TIMER_tmr1Start(Uint16_t u16_a_prescaler)
+{
+	//select the required prescaler value
+	switch(u16_a_prescaler)
+	{
+	case 1:
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+		break;
+	case 8:
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+		break;
+	case 64:
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+		break;
+	case 256:
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+		break;
+	case 1024:
+		CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+		SET_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+		break;
+	default:
+		return TIMER_ERROR;
+	}
+	return TIMER_OK;
+}
+/* ************************************************************************************************/
+
+void TIMER_tmr1Stop(void)
+{
+ //Stop the timer by clearing the prescaler
+
+	CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS10_BIT);
+	CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS11_BIT);
+	CLEAR_BIT(TMR_U8_TCCR1B_REG, TMR_U8_CS12_BIT);
+}
+
+void TIMER_tmr1deinit(void)
+{
+    TIMER_tmr1Stop();
+	//* Disable the interrupt for timer1 overflow.*//*
+	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE1_BIT);    
+}
+
+
+	/*Timer_1 overflow ISR*/	
+ISR(TIM1_OVF_INT)
+{
+	u32_g_timer1Overflow++;
+}		
 
 
 /**
