@@ -8,7 +8,7 @@
 #ifndef ECU_LED_LED_CONFIG_H_
 #define ECU_LED_LED_CONFIG_H_
 
-#include"../../SERVICES/STD_Types.h"
+#include"../../COMMON/std_types.h"
 
 typedef enum
 {
@@ -18,10 +18,10 @@ typedef enum
 
 typedef struct
 {
-    Uchar8_t port_name : 3;
-    Uchar8_t pin : 3;
-    Uchar8_t led_status : 1;
-    Uchar8_t reserved : 1;
+    Uint8_t port_name : 3;
+    Uint8_t pin : 3;
+    Uint8_t led_status : 1;
+    Uint8_t reserved : 1;
 }ST_led_t;
 
 

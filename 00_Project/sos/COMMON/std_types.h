@@ -11,8 +11,8 @@
 #define SERVIES_STD_TYPES_H_
 
 
-typedef signed char  						Schar8_t;
-typedef unsigned char 						Uchar8_t;
+typedef signed char  						Sint8_t;
+typedef unsigned char 						Uint8_t;
 
 
 typedef signed short int 					Sint16_t;
@@ -24,8 +24,8 @@ typedef unsigned long long int  			Uint64_t;
 
 
 
-typedef signed char  						VSchar8_t;
-typedef unsigned char 						VUchar8_t;
+typedef signed char  						VSint8_t;
+typedef unsigned char 						VUint8_t;
 typedef volatile signed short int 			VSint16_t;
 typedef volatile unsigned short int 		VUint16_t;
 typedef volatile signed int 				VSint32_t;
@@ -39,7 +39,7 @@ typedef double								float64_t;
 typedef long double 						float96_t;
 
 
-typedef Uchar8_t                   			Std_ReturnType;
+typedef Uint8_t                   			Std_ReturnType;
 #define E_OK                   				(Std_ReturnType)0x01
 #define E_NOT_OK               				(Std_ReturnType)0x00
 

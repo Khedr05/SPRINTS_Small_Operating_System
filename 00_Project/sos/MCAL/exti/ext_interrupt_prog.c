@@ -19,7 +19,7 @@ static void(*INT2_InterruptHandler)(void) = PTR_NULL;
 
 void EXT_vINTERRUPT_setSenseControl()
 {
-	Uchar8_t elementIndex = 0;
+	Uint8_t elementIndex = 0;
 	while(elementIndex < EXT_INTERRUPT_PINS)
 	{
 		switch(A_interruptConfig[elementIndex].EXTERNAL_INTERRUPRT_Number)
@@ -114,7 +114,7 @@ void EXT_vINTERRUPT_setSenseControl()
 void EXT_vINTERRUPT_Denit()
 {
 	
-	Uchar8_t elementIndex = 0;
+	Uint8_t elementIndex = 0;
 	
 	while(elementIndex < EXT_INTERRUPT_PINS)
 	{
@@ -163,7 +163,7 @@ static void EXT2_INTERRUPT_SetInterruptHandler(void(*InterruptHandler)(void))
 
 void EXT_INTERRUPT_SetInterruptHandler()
 {
-	Uchar8_t elementIndex = 0;
+	Uint8_t elementIndex = 0;
 	while(elementIndex < EXT_INTERRUPT_PINS)
 	{
 		

@@ -14,7 +14,7 @@ void PUSH_BTN_intialize()
 	DIO_initpinn(PINC4,INPULL);
 }
 
-void PUSH_BTN_read_state(Uchar8_t btnNumber, EN_PUSH_BTN_state_t *btn_state)
+void PUSH_BTN_read_state(Uint8_t btnNumber, EN_PUSH_BTN_state_t *btn_state)
 {
 
 		EN_dio_value_t pin_logic_status = DIO_LOW;

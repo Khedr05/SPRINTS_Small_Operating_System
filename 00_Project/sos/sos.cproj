@@ -135,7 +135,13 @@
     <Compile Include="COMMON\vect_table.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ECUAL\led\led.h">
+    <Compile Include="ECUAL\led\led_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\led\led_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\led\led_prog.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ECUAL\push_button\pb_config.c">
