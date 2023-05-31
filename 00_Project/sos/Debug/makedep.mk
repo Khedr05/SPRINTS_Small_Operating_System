@@ -6,5 +6,7 @@ APPLICATION\app\app.c
 
 main.c
 
+MCAL\dio\dio.c
+
 SERVICES\sos\sos_prog.c
 
