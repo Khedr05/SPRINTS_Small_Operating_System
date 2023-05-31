@@ -106,23 +106,23 @@ EN_TIMER_ERROR_T TIMER_timer0NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputE
  * @brief Creates a delay using timer_0 in overflow mode
  *
  * This function Creates the desired delay on timer_0 normal mode.
- * @param[in] u16 u16_a_interval value to set the desired delay.
+ * @param[in] Uint16_t u16_a_interval value to set the desired delay.
  *
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-EN_TIMER_ERROR_T TIMER_delay_ms(u16 u16_a_interval);
+EN_TIMER_ERROR_T TIMER_delay_ms(Uint16_t u16_a_interval);
 
 /**
  * @brief Start the timer by setting the desired prescaler.
  *
  * This function set the prescaler for timer_0.
- * @param[in] u16 u16_a_prescaler value to set the desired prescaler.
+ * @param[in] Uint16_t u16_a_prescaler value to set the desired prescaler.
  *
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-EN_TIMER_ERROR_T TIMER_timer0Start(u16 u16_a_prescaler);
+EN_TIMER_ERROR_T TIMER_timer0Start(Uint8_t u16_a_prescaler);
 
 /**
  * @brief Stop the timer by setting the prescaler to be 000--> timer is stopped.
@@ -139,12 +139,12 @@ void TIMER_timer0Stop(void);
  * @brief timer compare match mode.
  *
  * This function set the compare value for timer_0.
- * @param[in] u8 u8_a_outCompValue value at which the matching will occur.
+ * @param[in] Uint8_t u8_a_outCompValue value at which the matching will occur.
  *
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-//EN_TIMER_ERROR_T TIMER_timer0CleareCompMatInit(u8 u8_a_outCompValue );
+//EN_TIMER_ERROR_T TIMER_timer0CleareCompMatInit(Uint8_t u8_a_outCompValue );
 
 
 
@@ -175,25 +175,25 @@ void TIMER_timer2Stop(void);
  * @brief Start the timer by setting the desired prescaler.
  *
  * This function set the prescaler for timer_2.
- * @param[in] u16 u16_a_prescaler value to set the desired prescaler.
+ * @param[in] Uint16_t u16_a_prescaler value to set the desired prescaler.
  *
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-EN_TIMER_ERROR_T TIMER_TMR2Start(u16 u16_a_prescaler);
+EN_TIMER_ERROR_T TIMER_TMR2Start(Uint16_t u16_a_prescaler);
 
 /**
  * @brief Creates a delay using timer_2 in overflow mode
  *
  * This function Creates the desired delay on timer_2 normal mode.
- * @param[in] u16 u16_a_interval value to set the desired delay.
+ * @param[in] Uint16_t u16_a_interval value to set the desired delay.
  *
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-EN_TIMER_ERROR_T TMR_delay_us(u16 u16_a_interval);
+EN_TIMER_ERROR_T TMR_delay_us(Uint16_t u16_a_interval);
 
-EN_TIMER_ERROR_T TMR_intDelay_ms(u16 u16_a_interval);
+EN_TIMER_ERROR_T TMR_intDelay_ms(Uint16_t u16_a_interval);
 
 /**
  * @brief Set callback function for timer overflow interrupt
@@ -203,12 +203,12 @@ EN_TIMER_ERROR_T TMR_intDelay_ms(u16 u16_a_interval);
  */
 EN_TIMER_ERROR_T TMR_ovfSetCallback(void (*void_a_pfOvfInterruptAction)(void));
 
-//EN_TIMER_ERROR_T TIMER_timer2CleareCompMatInit(u8 u8_a_outCompValue );
+//EN_TIMER_ERROR_T TIMER_timer2CleareCompMatInit(Uint8_t u8_a_outCompValue );
 
 //EN_TIMER_ERROR_T TIMER_tmr1NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputEnable);
-//EN_TIMER_ERROR_T TIMER_tmr1Start(u16 u16_a_prescaler);
+//EN_TIMER_ERROR_T TIMER_tmr1Start(Uint16_t u16_a_prescaler);
 //void TIMER_tmr1Stop(void);
-//EN_TIMER_ERROR_T TIMER_tmr1CreatePWM(u8 u8_a_dutyCycle);
+//EN_TIMER_ERROR_T TIMER_tmr1CreatePWM(Uint8_t u8_a_dutyCycle);
 
 EN_TIMER_ERROR_T TIMER_tmr1NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputEnable);
 void TIMER_tmr1CleareCompMatInit(void);

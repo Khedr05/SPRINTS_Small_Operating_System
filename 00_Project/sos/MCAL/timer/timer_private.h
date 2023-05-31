@@ -19,49 +19,49 @@
  /*******************************************************************************************************************************************************************/
  /* TMR Registers' Locations */
 
-#define	TMR_U8_TIMSK_REG		* ( ( volatile  u8 * ) 0x59 )
-#define	TMR_U8_TIFR_REG			* ( ( volatile  u8 * ) 0x58 )
-#define	TMR_U8_SFIOR_REG		* ( ( volatile  u8 * ) 0x50 )
+#define	TMR_U8_TIMSK_REG		* ( ( volatile  Uint8_t * ) 0x59 )
+#define	TMR_U8_TIFR_REG			* ( ( volatile  Uint8_t * ) 0x58 )
+#define	TMR_U8_SFIOR_REG		* ( ( volatile  Uint8_t * ) 0x50 )
 
 /*
  * 8-bit Timer/Counter0
  */
 
-#define	TMR_U8_TCCR0_REG		* ( ( volatile  u8 * ) 0x53 )
-#define	TMR_U8_TCNT0_REG		* ( ( volatile  u8 * ) 0x52 )
-#define	TMR_U8_OCR0_REG			* ( ( volatile  u8 * ) 0x5C )
+#define	TMR_U8_TCCR0_REG		* ( ( volatile  Uint8_t * ) 0x53 )
+#define	TMR_U8_TCNT0_REG		* ( ( volatile  Uint8_t * ) 0x52 )
+#define	TMR_U8_OCR0_REG			* ( ( volatile  Uint8_t * ) 0x5C )
 
 //  /*
 //   * 16-bit Timer/Counter1
 //   */
 // 
-// #define	TMR_U8_TCCR1A_REG		*( ( volatile  u8 * ) 0x4F )
-// #define	TMR_U8_TCCR1B_REG		*( ( volatile  u8 * ) 0x4E )
-// #define	TMR_U8_TCNT1H_REG		*( ( volatile  u8 * ) 0x4D )
-// #define	TMR_U8_TCNT1L_REG		*( ( volatile  u8 * ) 0x4C )
-//   /* DataType is u16 * in order to get both registers ( i.e. TCNT1L and TCNT1H respectively ) locations in memory */
-// #define TMR_U16_TCNT1_REG		*( ( volatile  u16 * ) 0x4C )
-// #define	TMR_U8_OCR1AH_REG		*( ( volatile  u8 * ) 0x4B )
-// #define	TMR_U8_OCR1AL_REG		*( ( volatile  u8 * ) 0x4A )
-// /* DataType is u16 * in order to get both registers ( i.e. OCR1AL and OCR1AH respectively ) locations in memory */
-// #define TMR_U16_OCR1A_REG		*( ( volatile  u16 * ) 0x4A )
-// #define	TMR_U8_OCR1BH_REG		*( ( volatile  u8 * ) 0x49 )
-// #define	TMR_U8_OCR1BL_REG		*( ( volatile  u8 * ) 0x48 )
-// /* DataType is u16 * in order to get both registers ( i.e. OCR1BL and OCR1BH respectively ) locations in memory */
-// #define TMR_U16_OCR1B_REG		*( ( volatile  u16 * ) 0x48 )
-// #define	TMR_U8_ICR1H_REG		*( ( volatile  u8 * ) 0x47 )
-// #define	TMR_U8_ICR1L_REG		*( ( volatile  u8 * ) 0x46 )
-// /* DataType is u16 * in order to get both registers ( i.e. ICR1L and ICR1H respectively ) locations in memory */
-// #define TMR_U16_ICR1_REG		*( ( volatile  u16 * ) 0x46 )
+// #define	TMR_U8_TCCR1A_REG		*( ( volatile  Uint8_t * ) 0x4F )
+// #define	TMR_U8_TCCR1B_REG		*( ( volatile  Uint8_t * ) 0x4E )
+// #define	TMR_U8_TCNT1H_REG		*( ( volatile  Uint8_t * ) 0x4D )
+// #define	TMR_U8_TCNT1L_REG		*( ( volatile  Uint8_t * ) 0x4C )
+//   /* DataType is Uint16_t * in order to get both registers ( i.e. TCNT1L and TCNT1H respectively ) locations in memory */
+// #define TMR_U16_TCNT1_REG		*( ( volatile  Uint16_t * ) 0x4C )
+// #define	TMR_U8_OCR1AH_REG		*( ( volatile  Uint8_t * ) 0x4B )
+// #define	TMR_U8_OCR1AL_REG		*( ( volatile  Uint8_t * ) 0x4A )
+// /* DataType is Uint16_t * in order to get both registers ( i.e. OCR1AL and OCR1AH respectively ) locations in memory */
+// #define TMR_U16_OCR1A_REG		*( ( volatile  Uint16_t * ) 0x4A )
+// #define	TMR_U8_OCR1BH_REG		*( ( volatile  Uint8_t * ) 0x49 )
+// #define	TMR_U8_OCR1BL_REG		*( ( volatile  Uint8_t * ) 0x48 )
+// /* DataType is Uint16_t * in order to get both registers ( i.e. OCR1BL and OCR1BH respectively ) locations in memory */
+// #define TMR_U16_OCR1B_REG		*( ( volatile  Uint16_t * ) 0x48 )
+// #define	TMR_U8_ICR1H_REG		*( ( volatile  Uint8_t * ) 0x47 )
+// #define	TMR_U8_ICR1L_REG		*( ( volatile  Uint8_t * ) 0x46 )
+// /* DataType is Uint16_t * in order to get both registers ( i.e. ICR1L and ICR1H respectively ) locations in memory */
+// #define TMR_U16_ICR1_REG		*( ( volatile  Uint16_t * ) 0x46 )
 
 /*
  * 8-bit Timer/Counter2
  */
 
-#define	TMR_U8_TCCR2_REG		*( ( volatile  u8 * ) 0x45 )
-#define	TMR_U8_TCNT2_REG		*( ( volatile  u8 * ) 0x44 )
-#define	TMR_U8_OCR2_REG			*( ( volatile  u8 * ) 0x43 )
-#define	TMR_U8_ASSR_REG			*( ( volatile  u8 * ) 0x42 )
+#define	TMR_U8_TCCR2_REG		*( ( volatile  Uint8_t * ) 0x45 )
+#define	TMR_U8_TCNT2_REG		*( ( volatile  Uint8_t * ) 0x44 )
+#define	TMR_U8_OCR2_REG			*( ( volatile  Uint8_t * ) 0x43 )
+#define	TMR_U8_ASSR_REG			*( ( volatile  Uint8_t * ) 0x42 )
 
  /*******************************************************************************************************************************************************************/
  /* TMR Registers' Description */
@@ -195,7 +195,7 @@
 /* End of ASSR Register */
 
 /* S-REG */
-#define TMR_U8_SREG_REG		    *( ( volatile u8 * ) 0x5F )
+#define TMR_U8_SREG_REG		    *( ( volatile Uint8_t * ) 0x5F )
 
 /*******************************************************************************************************************************************************************/
 

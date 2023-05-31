@@ -9,7 +9,7 @@
 #ifndef H_EXTI_H_
 #define H_EXTI_H_
 
-#include "../MCAL/exti/ext_interrupt_interface.h"
+#include "../../MCAL/exti/ext_interrupt_interface.h"
 
 
 void H_EXTI_init(void);

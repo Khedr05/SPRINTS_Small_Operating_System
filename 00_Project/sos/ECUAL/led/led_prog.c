@@ -5,85 +5,62 @@
  *      Author: 20101
  */
 
-#include"LED_interface.h"
+
+#include "../../MCAL/dio/dio.h"
+#include "LED_interface.h"
 
 Std_ReturnType LED_initialize(const ST_led_t *led)
 {
-	Std_ReturnType ret = E_NOT_OK;
+	Std_ReturnType ret = E_OK;
 	if(PTR_NULL == led)
 	{
 		ret = E_NOT_OK;
 	}
 	else
 	{
-		ST_pin_config_t LED_pin_obj =
-		{
-			.port = led->port_name,
-			.pin = led->pin,
-			.direction = GPIO_DIRECTION_OUTPUT,
-			.logic = led->led_status
-		};
-		ret = GPIO_pin_intialize(&LED_pin_obj);
+		
+		DIO_initpin(led->DIO_Pin_type,OUTPUT);
 	}
 	return ret;
 }
 Std_ReturnType LED_turn_on(const ST_led_t *led)
 {
-	Std_ReturnType ret = E_NOT_OK;
+	Std_ReturnType ret = E_OK;
 	if(PTR_NULL == led)
 	{
 		ret = E_NOT_OK;
 	}
 	else
 	{
-		ST_pin_config_t LED_pin_obj =
-		{
-				.port = led->port_name,
-				.pin = led->pin,
-				.direction = GPIO_DIRECTION_OUTPUT,
-				.logic = led->led_status
-		};
-		ret = GPIO_pin_write_logic(&LED_pin_obj , GPIO_LOGIC_HIGH);
+		
+		DIO_writepin(led->DIO_Pin_type, OUTPUT_HIGH);
 	}
 	return ret;
 }
 Std_ReturnType LED_turn_off(const ST_led_t *led)
 {
-	Std_ReturnType ret = E_NOT_OK;
+	Std_ReturnType ret = E_OK;
 	if(PTR_NULL == led)
 	{
 		ret = E_NOT_OK;
 	}
 	else
 	{
-		ST_pin_config_t LED_pin_obj =
-		{
-				.port = led->port_name,
-				.pin = led->pin,
-				.direction = GPIO_DIRECTION_OUTPUT,
-				.logic = led->led_status
-		};
-		ret = GPIO_pin_write_logic(&LED_pin_obj , GPIO_LOGIC_LOW);
+		
+		DIO_writepin(led->DIO_Pin_type, OUTPUT_LOW);
 	}
 	return ret;
 }
 Std_ReturnType LED_toggle(const ST_led_t *led)
 {
-	Std_ReturnType ret = E_NOT_OK;
+	Std_ReturnType ret = E_OK;
 	if(PTR_NULL == led)
 	{
 		ret = E_NOT_OK;
 	}
 	else
 	{
-		ST_pin_config_t LED_pin_obj =
-		{
-				.port = led->port_name,
-				.pin = led->pin,
-				.direction = GPIO_DIRECTION_OUTPUT,
-				.logic = led->led_status
-		};
-		ret = GPIO_pin_toggle_logic(&LED_pin_obj);
+	   DIO_togglepin(led->DIO_Pin_type);
 	}
 	return ret;
 }

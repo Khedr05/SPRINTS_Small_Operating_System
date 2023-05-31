@@ -9,7 +9,7 @@
 void  DIO_initpin(EN_DIO_Pin_type pin,EN_DIO_PinStatus_type status)
 {
 	EN_DIO_Port_type port = pin/8 ;
-	Uchar8_t pin_num =pin % 8;
+	Uint8_t pin_num =pin % 8;
 	
 	if (pin_num < 8)
 	{
@@ -99,7 +99,7 @@ void  DIO_initpin(EN_DIO_Pin_type pin,EN_DIO_PinStatus_type status)
 void  DIO_writepin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type volt)
 {
 	EN_DIO_Port_type port = pin/8 ;
-	Uchar8_t pin_num =pin % 8;
+	Uint8_t pin_num =pin % 8;
 	if (pin_num<8)
 	{
 		switch (volt)
@@ -168,7 +168,7 @@ void  DIO_writepin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type volt)
 void  DIO_readpin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type *volt)
 {
 	EN_DIO_Port_type port = pin/8 ;
-	Uchar8_t pin_num =pin % 8;
+	Uint8_t pin_num =pin % 8;
 	if (pin_num < 8)
 	{
 
@@ -202,7 +202,7 @@ void  DIO_readpin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type *volt)
 void  DIO_togglepin(EN_DIO_Pin_type pin)
 {
 	EN_DIO_Port_type port = pin/8 ;
-	Uchar8_t pin_num =pin % 8;
+	Uint8_t pin_num =pin % 8;
 	if (pin_num< 8)
 	{
 		switch(port)
