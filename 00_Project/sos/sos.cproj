@@ -135,6 +135,12 @@
     <Compile Include="COMMON\vect_table.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ECUAL\h_exti\h_exti.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ECUAL\h_exti\h_exti.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ECUAL\led\led_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -144,22 +150,22 @@
     <Compile Include="ECUAL\led\led_prog.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ECUAL\push_button\pb_config.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ECUAL\push_button\PB_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ECUAL\push_button\PB_interface.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ECUAL\push_button\PB_prog.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\dio\dio.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MCAL\dio\dio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\dio\dio_cfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\dio\dio_linking_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\dio\dio_private.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\exti\ext_interrupt_config.c">
@@ -186,13 +192,31 @@
     <Compile Include="MCAL\mcu_cfg\mcu_Prog.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\timer\timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\timer\timer_config.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\timer\timer_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\timer\timer_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\timer\timer_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SERVICES\sos\sos_config.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SERVICES\sos\sos_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SERVICES\sos\sos_interface.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SERVICES\sos\sos_prog.c">
+    <Compile Include="SERVICES\sos\sos_program.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -200,13 +224,14 @@
     <Folder Include="APPLICATION" />
     <Folder Include="APPLICATION\app" />
     <Folder Include="ECUAL\led" />
-    <Folder Include="ECUAL\push_button" />
+    <Folder Include="ECUAL\h_exti" />
     <Folder Include="MCAL" />
     <Folder Include="ECUAL" />
     <Folder Include="COMMON" />
-    <Folder Include="MCAL\dio" />
     <Folder Include="MCAL\exti" />
     <Folder Include="MCAL\mcu_cfg" />
+    <Folder Include="MCAL\dio" />
+    <Folder Include="MCAL\timer" />
     <Folder Include="SERVICES" />
     <Folder Include="SERVICES\sos" />
   </ItemGroup>
