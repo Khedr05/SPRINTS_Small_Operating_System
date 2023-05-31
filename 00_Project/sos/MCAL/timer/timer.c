@@ -587,6 +587,25 @@ void TIMER_tmr1deinit(void)
 }
 
 
+
+void TIMER_tmr0deinit(void)
+{
+    TIMER_timer0Stop();
+	//* Disable the interrupt for timer1 overflow.*//*
+	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE0_BIT);    
+}
+
+
+
+void TIMER_tmr2deinit(void)
+{
+    TIMER_timer2Stop();
+	//* Disable the interrupt for timer1 overflow.*//*
+	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE2_BIT);    
+}
+
+
+
 	/*Timer_1 overflow ISR*/	
 ISR(TIM1_OVF_INT)
 {

@@ -216,6 +216,11 @@ EN_TIMER_ERROR_T TIMER_tmr1Start(Uint16_t u16_a_prescaler);
 void TIMER_tmr1Stop(void);
 void TIMER_tmr1deinit(void);
 
+void TIMER_tmr0deinit(void);
+
+
+void TIMER_tmr2deinit(void);
+
 /* ***********************************************************************************************/
 
 #endif /* TIMER_INTERFACE_H_ */
