@@ -42,6 +42,7 @@ SUBDIRS :=  \
 ../COMMON \
 ../MCAL/dio \
 ../MCAL/exti \
+../MCAL/mcu_cfg \
 ../SERVICES \
 ../SERVICES/sos
 
@@ -52,6 +53,7 @@ C_SRCS +=  \
 ../main.c \
 ../MCAL/exti/ext_interrupt_config.c \
 ../MCAL/exti/ext_interrupt_prog.c \
+../MCAL/mcu_cfg/mcu_Prog.c \
 ../SERVICES/sos/sos_prog.c
 
 
@@ -66,6 +68,7 @@ APPLICATION/app/app.o \
 main.o \
 MCAL/exti/ext_interrupt_config.o \
 MCAL/exti/ext_interrupt_prog.o \
+MCAL/mcu_cfg/mcu_Prog.o \
 SERVICES/sos/sos_prog.o
 
 OBJS_AS_ARGS +=  \
@@ -73,6 +76,7 @@ APPLICATION/app/app.o \
 main.o \
 MCAL/exti/ext_interrupt_config.o \
 MCAL/exti/ext_interrupt_prog.o \
+MCAL/mcu_cfg/mcu_Prog.o \
 SERVICES/sos/sos_prog.o
 
 C_DEPS +=  \
@@ -80,6 +84,7 @@ APPLICATION/app/app.d \
 main.d \
 MCAL/exti/ext_interrupt_config.d \
 MCAL/exti/ext_interrupt_prog.d \
+MCAL/mcu_cfg/mcu_Prog.d \
 SERVICES/sos/sos_prog.d
 
 C_DEPS_AS_ARGS +=  \
@@ -87,6 +92,7 @@ APPLICATION/app/app.d \
 main.d \
 MCAL/exti/ext_interrupt_config.d \
 MCAL/exti/ext_interrupt_prog.d \
+MCAL/mcu_cfg/mcu_Prog.d \
 SERVICES/sos/sos_prog.d
 
 OUTPUT_FILE_PATH +=sos.elf
@@ -125,6 +131,13 @@ MCAL/exti/ext_interrupt_config.o: ../MCAL/exti/ext_interrupt_config.c
 	
 
 MCAL/exti/ext_interrupt_prog.o: ../MCAL/exti/ext_interrupt_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/mcu_cfg/mcu_Prog.o: ../MCAL/mcu_cfg/mcu_Prog.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

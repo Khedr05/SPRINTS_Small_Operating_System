@@ -12,9 +12,9 @@
 extern const ST_EXT_INTERRUPTS_CFG A_interruptConfig[EXT_INTERRUPT_PINS];
 
 
-static void(*INT0_InterruptHandler)(void) = NULL;
-static void(*INT1_InterruptHandler)(void) = NULL;
-static void(*INT2_InterruptHandler)(void) = NULL;
+static void(*INT0_InterruptHandler)(void) = PTR_NULL;
+static void(*INT1_InterruptHandler)(void) = PTR_NULL;
+static void(*INT2_InterruptHandler)(void) = PTR_NULL;
 
 
 void EXT_vINTERRUPT_setSenseControl()

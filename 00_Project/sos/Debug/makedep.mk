@@ -10,5 +10,7 @@ MCAL\exti\ext_interrupt_config.c
 
 MCAL\exti\ext_interrupt_prog.c
 
+MCAL\mcu_cfg\mcu_Prog.c
+
 SERVICES\sos\sos_prog.c
 
