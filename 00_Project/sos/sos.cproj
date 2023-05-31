@@ -147,7 +147,19 @@
     <Compile Include="MCAL\dio\dio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\exti\exti.h">
+    <Compile Include="MCAL\exti\ext_interrupt_config.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\exti\ext_interrupt_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\exti\ext_interrupt_interface.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\exti\ext_interrupt_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\exti\ext_interrupt_prog.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SERVICES\sos\sos_config.h">
