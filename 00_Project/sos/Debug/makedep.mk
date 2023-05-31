@@ -4,6 +4,8 @@
 
 APPLICATION\app\app.c
 
+ECUAL\led\led_prog.c
+
 ECUAL\push_button\pb_config.c
 
 ECUAL\push_button\PB_prog.c

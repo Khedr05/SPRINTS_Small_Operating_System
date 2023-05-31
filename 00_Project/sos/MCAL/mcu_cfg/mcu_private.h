@@ -9,7 +9,7 @@
 #ifndef SERVIES_MCU_PRIVATE_H_
 #define SERVIES_MCU_PRIVATE_H_
 
-#define SREG_REG	*((VUchar8_t *)0x5F)
+#define SREG_REG	*((VUint8_t *)0x5F)
 
 
 #endif /* SERVIES_MCU_PRIVATE_H_ */

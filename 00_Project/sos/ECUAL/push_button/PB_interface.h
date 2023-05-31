@@ -10,7 +10,8 @@
 
 #include "PB_config.h"
 #include "../../MCAL/dio/dio.h"
-#include "../../COMMON/BIT_Math.h"
+#include "../../COMMON/bit_math.h"
+#include "../../COMMON/std_types.h"
 
 /*
 Function: PUSH_BTN_intialize
@@ -55,6 +56,6 @@ Overall, the PUSH_BTN_read_state function provides a way to read the current en_
 its value. By using this function, the software can determine whether the push button is currently pressed or
 released and take appropriate action based on its en_g_state.
 */
-void PUSH_BTN_read_state(Uchar8_t btnNumber, EN_PUSH_BTN_state_t *btn_state);
+void PUSH_BTN_read_state(Uint8_t btnNumber, EN_PUSH_BTN_state_t *btn_state);
 
 #endif /* ECU_PUSH_BUTTON_PB_INTERFACE_H_ */
