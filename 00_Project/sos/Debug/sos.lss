@@ -65,12 +65,6 @@ Disassembly of section .text:
   68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 0000006c <main>:
-
-#include <avr/io.h>
-
-
-int main(void)
-{
   6c:	ff cf       	rjmp	.-2      	; 0x6c <main>
 
 0000006e <_exit>:

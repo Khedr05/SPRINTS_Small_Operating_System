@@ -6,3 +6,5 @@ APPLICATION\app\app.c
 
 main.c
 
+SERVICES\sos\sos_prog.c
+
