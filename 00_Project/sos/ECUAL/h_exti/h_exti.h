@@ -9,11 +9,12 @@
 #ifndef H_EXTI_H_
 #define H_EXTI_H_
 
-#include "../../MCAL/exti/ext_interrupt_interface.h"
+#include "../../MCAL/exti/exti_Interface.h"
 
 
-void H_EXTI_init(void);
-void H_EXTI_deinit(void);
+Std_ReturnType H_EXTI_init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx);
+
+Std_ReturnType H_EXTI_deinit(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx);
 
 
 #endif /* H_EXTI_H_ */

@@ -168,19 +168,16 @@
     <Compile Include="MCAL\dio\dio_private.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\exti\ext_interrupt_config.c">
+    <Compile Include="MCAL\exti\exti_config.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\exti\ext_interrupt_config.h">
+    <Compile Include="MCAL\exti\exti_Interface.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\exti\ext_interrupt_interface.h">
+    <Compile Include="MCAL\exti\exti_private.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="MCAL\exti\ext_interrupt_private.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="MCAL\exti\ext_interrupt_prog.c">
+    <Compile Include="MCAL\exti\exti_prog.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\mcu_cfg\mcu_interface.h">

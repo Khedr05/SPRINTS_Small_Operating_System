@@ -12,9 +12,7 @@ main.c
 
 MCAL\dio\dio.c
 
-MCAL\exti\ext_interrupt_config.c
-
-MCAL\exti\ext_interrupt_prog.c
+MCAL\exti\exti_prog.c
 
 MCAL\mcu_cfg\mcu_Prog.c
 

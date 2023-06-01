@@ -8,9 +8,14 @@
 #ifndef MCAL_INTERRUPT_EXTERNAL_INTERRUPT_EXT_INTERRUPT_CONFIG_H_
 #define MCAL_INTERRUPT_EXTERNAL_INTERRUPT_EXT_INTERRUPT_CONFIG_H_
 
-//#define EXT_INT0 __vector_1
+#define EXT_INT0 __vector_1
+#define EXT_INT1 __vector_2
+#define EXT_INT2 __vector_3
 
-#define EXT_INTERRUPT_PINS			1
+
+#define ISR(INT_VECT)void INT_VECT(void) __attribute__ ((signal,used));\
+void INT_VECT(void)
+
 
 /*
 Enum: EN_MCUCR_REG_BITS
@@ -117,7 +122,7 @@ Members:
 - LOW_LEVEL_SENSE_CONTROL    : Represents the sense control mode where the interrupt is triggered when 
 							   the input signal is at a low level.
 - ANY_LOGICAL_SENSE_CONTROL  : Represents the sense control mode where the interrupt is triggered when 
-							   there is any change in the logical en_g_state of the input signal.
+							   there is any change in the logical state of the input signal.
 - FALLING_EDGE_SENSE_CONTROL : Represents the sense control mode where the interrupt is triggered when 
 							   the input signal changes from a high level to a low level.
 - RISING_EDGE_SENSE_CONTROL  : Represents the sense control mode where the interrupt is triggered when
@@ -160,18 +165,17 @@ typedef enum
 	EXT2_INTERRUPTS
 }EN_EXT_INTERRUPTS;
 
-
 /*
 Struct: ST_EXT_INTERRUPTS_CFG
 
-Description: A structure that contains the configuration settings for an external
+Description: A structure that contains the configuration settings for an external 
 			 interrupt on a micro-controller.
 Members:
--  INTERRUPT_EXTERNAL_HANDLER : A function pointer to the interrupt service routine (ISR)
+-  INTERRUPT_EXTERNAL_HANDLER : A function pointer to the interrupt service routine (ISR) 
 								for the external interrupt(call-back function).
--  EXTERNAL_INTERRUPRT_Number : An instance of the EN_EXT_INTERRUPTS enum that specifies the
+-  EXTERNAL_INTERRUPRT_Number : An instance of the EN_EXT_INTERRUPTS enum that specifies the 
 								external interrupt number to be configured.
--  EXTERNAL_INTERRUPRT_Sense_Control : An instance of the EN_EXT_INTERRUPT_Sense_Control enum
+-  EXTERNAL_INTERRUPRT_Sense_Control : An instance of the EN_EXT_INTERRUPT_Sense_Control enum 
 									   that specifies the sense control mode for the external interrupt.
 
 
@@ -187,7 +191,5 @@ typedef struct
 	EN_EXT_INTERRUPT_Sense_Control EXTERNAL_INTERRUPRT_Sense_Control;
 
 }ST_EXT_INTERRUPTS_CFG;
-
-
 
 #endif /* MCAL_INTERRUPT_EXTERNAL_INTERRUPT_EXT_INTERRUPT_CONFIG_H_ */

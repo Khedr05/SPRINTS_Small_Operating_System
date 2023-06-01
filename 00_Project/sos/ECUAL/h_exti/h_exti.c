@@ -8,12 +8,12 @@
 
 #include "h_exti.h"
 
-void H_EXTI_init(void)
+Std_ReturnType H_EXTI_init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
 {
-	EXT_vINTERRUPT_Init();
+	EXT_vINTERRUPT_Init(EXT_INTx);
 }
 
-void H_EXTI_deinit(void)
+Std_ReturnType H_EXTI_deinit(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
 {
-	EXT_vINTERRUPT_Denit();
+	EXT_vINTERRUPT_Denit(EXT_INTx);
 }
