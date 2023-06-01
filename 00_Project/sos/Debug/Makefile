@@ -37,6 +37,7 @@ SUBDIRS :=  \
 ../APPLICATION/app \
 ../ECUAL/led \
 ../ECUAL/h_exti \
+../ECUAL/push_button \
 ../MCAL \
 ../ECUAL \
 ../COMMON \
@@ -53,6 +54,7 @@ C_SRCS +=  \
 ../APPLICATION/app/app.c \
 ../ECUAL/h_exti/h_exti.c \
 ../ECUAL/led/led_prog.c \
+../ECUAL/push_button/PB_prog.c \
 ../main.c \
 ../MCAL/dio/dio.c \
 ../MCAL/exti/exti_prog.c \
@@ -73,6 +75,7 @@ OBJS +=  \
 APPLICATION/app/app.o \
 ECUAL/h_exti/h_exti.o \
 ECUAL/led/led_prog.o \
+ECUAL/push_button/PB_prog.o \
 main.o \
 MCAL/dio/dio.o \
 MCAL/exti/exti_prog.o \
@@ -86,6 +89,7 @@ OBJS_AS_ARGS +=  \
 APPLICATION/app/app.o \
 ECUAL/h_exti/h_exti.o \
 ECUAL/led/led_prog.o \
+ECUAL/push_button/PB_prog.o \
 main.o \
 MCAL/dio/dio.o \
 MCAL/exti/exti_prog.o \
@@ -99,6 +103,7 @@ C_DEPS +=  \
 APPLICATION/app/app.d \
 ECUAL/h_exti/h_exti.d \
 ECUAL/led/led_prog.d \
+ECUAL/push_button/PB_prog.d \
 main.d \
 MCAL/dio/dio.d \
 MCAL/exti/exti_prog.d \
@@ -112,6 +117,7 @@ C_DEPS_AS_ARGS +=  \
 APPLICATION/app/app.d \
 ECUAL/h_exti/h_exti.d \
 ECUAL/led/led_prog.d \
+ECUAL/push_button/PB_prog.d \
 main.d \
 MCAL/dio/dio.d \
 MCAL/exti/exti_prog.d \
@@ -150,6 +156,13 @@ ECUAL/h_exti/h_exti.o: ../ECUAL/h_exti/h_exti.c
 	
 
 ECUAL/led/led_prog.o: ../ECUAL/led/led_prog.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+ECUAL/push_button/PB_prog.o: ../ECUAL/push_button/PB_prog.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
