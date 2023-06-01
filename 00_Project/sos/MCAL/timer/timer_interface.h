@@ -58,9 +58,9 @@ typedef enum {
 #define GLOBAL_INTERRUPT_ENABLE_BIT      7
  /* timer 0 macros */
 #define MAX_TIMER_DELAY                     (MAX_DELAY * 65535)
-#define MAX_DELAY                         (0.262144f) // in sec
+#define MAX_DELAY                         (0.065536f) // in sec
 #define MAX_COUNTS                           256
-#define TICK_TIME                         (0.001024f) // in sec
+#define TICK_TIME                         (0.000265f) // in sec
 
 /* timer 2 macros */
 /*
@@ -169,7 +169,7 @@ EN_TIMER_ERROR_T TIMER_TMR2NormalModeInit(EN_TIMER_INTERRPUT_T en_a_interrputEna
  *
  * @return void
  */
-void TIMER_timer2Stop(void);
+void TMR_TMR2Stop(void);
 
 /**
  * @brief Start the timer by setting the desired prescaler.

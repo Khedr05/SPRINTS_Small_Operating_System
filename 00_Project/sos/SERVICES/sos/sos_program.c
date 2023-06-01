@@ -23,7 +23,7 @@ Uint8_t gl_is_init = FALSE;
 Uint8_t gl_system_tick = FALSE;
 
 // this global counter counts the ticks of system
-Uint64_t gl_ticks_counter = 0 ;
+Uint64_t gl_ticks_counter = FALSE ;
 
 // this global indicates the status of running
 enu_run_state_t gl_running_state = RUNNING_DISABLED;

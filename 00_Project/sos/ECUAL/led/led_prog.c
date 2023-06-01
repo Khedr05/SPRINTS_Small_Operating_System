@@ -6,7 +6,7 @@
  */
 
 
-#include "../../MCAL/dio/dio.h"
+
 #include "LED_interface.h"
 
 Std_ReturnType LED_initialize(const ST_led_t *led)

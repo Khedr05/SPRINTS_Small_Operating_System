@@ -69,12 +69,12 @@ typedef enum
 enu_system_status_t sos_init(void);
 
 /**
- * @brief                                               :   Function Used to Initialize sos
- * @name                                                :   sos_init
+ * @brief                                               :   Function Used to de-Initialize sos
+ * @name                                                :   sos_deinit
  * @param[in,out]                                       :   None
  * @param[in]                                           :   None   
  * @return      SOS_STATUS_SUCCESS                      :   In case of Successful Operation     
- *              SOS_STATUS_INVALID_STATE                :   In case of re-initialization    
+ *              SOS_STATUS_INVALID_STATE                :   In case of duplicated deinitialization or the sos not initialized before   
  *             
  */
 enu_system_status_t sos_deinit(void);

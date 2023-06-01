@@ -8,7 +8,6 @@
 #ifndef ECU_LED_LED_CONFIG_H_
 #define ECU_LED_LED_CONFIG_H_
 
-#include "../../COMMON/std_types.h"
 
 typedef enum
 {

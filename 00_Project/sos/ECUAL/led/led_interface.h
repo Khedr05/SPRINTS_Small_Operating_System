@@ -8,9 +8,11 @@
 #ifndef ECU_LED_LED_INTERFACE_H_
 #define ECU_LED_LED_INTERFACE_H_
 
-#include "LED_config.h"
 #include "../../COMMON/bit_math.h"
 #include "../../COMMON/std_types.h"
+#include "../../MCAL/dio/dio.h"
+#include "led_config.h"
+
 
 
  Std_ReturnType LED_initialize(const ST_led_t *led);

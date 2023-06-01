@@ -349,21 +349,27 @@ EN_TIMER_ERROR_T TMR_intDelay_ms(Uint16_t u16_a_interval) {
         /*Compare the desired delay by the maximum delay for each overflow*/
         if (d64_a_delay < MAX_DELAY) {
             /*just on overflow is required*/
-            TMR_U8_TCNT2_REG = (Uint8_t) ((MAX_DELAY - d64_a_delay) / TICK_TIME);
-            u16_g_overflow2Numbers = 1;
+           // TMR_U8_TCNT2_REG = (Uint8_t) ((MAX_DELAY - d64_a_delay) / TICK_TIME);
+            //u16_g_overflow2Numbers = 1;
+			u16_g_overflow2Numbers = ceil(d64_a_delay / MAX_DELAY);
+			//u16_g_tcnt2InitialVal = (Uint8_t)(MAX_COUNTS - ((d64_a_delay / TICK_TIME) / u16_g_overflowNumbers));
+			TMR_U8_TCNT2_REG = (Uint8_t) ((MAX_COUNTS) - ((d64_a_delay - (MAX_DELAY * (u16_g_overflow2Numbers - 1.0))) /
+			TICK_TIME)); // in decimal  (0 - 255)
+			u16_g_tcnt2InitialVal = TMR_U8_TCNT2_REG;
         }
 		 else if (d64_a_delay == MAX_DELAY) {
             TMR_U8_TCNT2_REG = 0x00;
             u16_g_overflow2Numbers = 1;
         } else {
             u16_g_overflow2Numbers = ceil(d64_a_delay / MAX_DELAY);
+			//u16_g_tcnt2InitialVal = (Uint8_t)(MAX_COUNTS - ((d64_a_delay / TICK_TIME) / u16_g_overflowNumbers));
             TMR_U8_TCNT2_REG = (Uint8_t) ((MAX_COUNTS) - ((d64_a_delay - (MAX_DELAY * (u16_g_overflow2Numbers - 1.0))) /
                                                        TICK_TIME)); // in decimal  (0 - 255)
-			u16_g_tcnt2InitialVal = TMR_U8_TCNT2_REG;
+			  u16_g_tcnt2InitialVal = TMR_U8_TCNT2_REG;
 			
 		}
           u16_g_overflow2Ticks = 0;
-          TIMER_TMR2Start(1024);
+          //TIMER_TMR2Start(1024);
           /*Polling the overflowNumbers and the overflow flag bit*/
 //           while (u16_g_overflow2Numbers > u16_g_overflow2Ticks /*&& (u8_g_TMRShutdownFlag == NULL || *u8_g_TMRShutdownFlag == 0)*/)
 //           {
@@ -599,7 +605,7 @@ void TIMER_tmr0deinit(void)
 
 void TIMER_tmr2deinit(void)
 {
-    TIMER_timer2Stop();
+    TMR_TMR2Stop();
 	//* Disable the interrupt for timer1 overflow.*//*
 	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE2_BIT);    
 }
@@ -647,12 +653,11 @@ EN_TIMER_ERROR_T TMR_ovfSetCallback(void (*void_a_pfOvfInterruptAction)(void)) {
 ISR(TIM2_OVF_INT)
 {
 	u16_g_overflow2Ticks++;
-	//TMR_U8_TCNT2_REG = u16_g_tcnt2InitialVal;
 	if (u16_g_overflow2Ticks >= u16_g_overflow2Numbers )
 	{
+		TMR_U8_TCNT2_REG = u16_g_tcnt2InitialVal;
 		u16_g_overflow2Ticks = 0;
-		u8_g_timeOut = 1;
-		TMR_TMR2Stop();
+		void_g_pfOvfInterruptAction();
 	}
 }
 
