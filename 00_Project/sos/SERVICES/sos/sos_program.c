@@ -9,6 +9,7 @@
 #include "../../MCAL/timer/timer_interface.h"
 #include "sos_config.h"
 #include "sos_interface.h"
+#include "../../MCAL/dio/dio.h"
 
 // sos config struct (contain selected timer data)
 extern const str_sos_configs_t gl_str_sos_configs ;
@@ -36,6 +37,11 @@ static void is_tick_done(void)
 {
 	gl_system_tick = TRUE;
 	gl_ticks_counter++;
+	
+	if(gl_ticks_counter == MAX_TICK_COUNTS)
+	{
+		gl_ticks_counter = FALSE ;
+	}
 }
 enu_system_status_t sos_init(void)
 {
@@ -45,7 +51,7 @@ enu_system_status_t sos_init(void)
 	{
 		// initialize timer with system tick desired time and callback
 		gl_str_sos_configs.str_sos_timer_functions.ptr_timer_init(ENABLED);
-		gl_str_sos_configs.str_sos_timer_functions.ptr_timer_set_Tick_time(1);
+		gl_str_sos_configs.str_sos_timer_functions.ptr_timer_set_Tick_time(100);
 		gl_str_sos_configs.str_sos_timer_functions.ptr_timer_setCallBack(is_tick_done);
 		
 		// means this module is initialized

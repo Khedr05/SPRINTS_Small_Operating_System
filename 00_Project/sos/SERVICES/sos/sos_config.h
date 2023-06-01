@@ -10,7 +10,8 @@
 #define SOS_CONFIG_H_
 
 
-#define  TIMER_PRESCALLER     8
+#define  TIMER_PRESCALLER     256
+#define  MAX_TICK_COUNTS      2147483647UL
 
 typedef enum 
 {
