@@ -24,7 +24,7 @@ ST_led_t gl_str_led_task2 =
 ST_PUSH_BTN_t gl_str_start_button =
 {
 	.PUSH_BTN_pin = PINC4,
-	.PUSH_BTN_connection = PUSH_BTN_PULL_DOWN,
+	.PUSH_BTN_connection = PUSH_BTN_PULL_UP,
 	.PUSH_BTN_state = PUSH_BTN_STATE_RELEASED
 };
 ST_EXT_INTERRUPTS_CFG  gl_str_HEXT_Stop_os =
