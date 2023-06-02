@@ -16,7 +16,7 @@ Std_ReturnType PUSH_BTN_intialize(const ST_PUSH_BTN_t *btn)
 	}
 	else
 	{
-		DIO_initpin(btn->PUSH_BTN_pin,INPULL);
+		DIO_initpin(btn->PUSH_BTN_pin,INFREE);
 		ret = E_OK;
 	}
 	return ret;

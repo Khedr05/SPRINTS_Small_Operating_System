@@ -52,6 +52,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../APPLICATION/app/app.c \
+../COMMON/system.c \
 ../ECUAL/h_exti/h_exti.c \
 ../ECUAL/led/led_prog.c \
 ../ECUAL/push_button/PB_prog.c \
@@ -73,6 +74,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 APPLICATION/app/app.o \
+COMMON/system.o \
 ECUAL/h_exti/h_exti.o \
 ECUAL/led/led_prog.o \
 ECUAL/push_button/PB_prog.o \
@@ -87,6 +89,7 @@ SERVICES/sos/sos_program.o
 
 OBJS_AS_ARGS +=  \
 APPLICATION/app/app.o \
+COMMON/system.o \
 ECUAL/h_exti/h_exti.o \
 ECUAL/led/led_prog.o \
 ECUAL/push_button/PB_prog.o \
@@ -101,6 +104,7 @@ SERVICES/sos/sos_program.o
 
 C_DEPS +=  \
 APPLICATION/app/app.d \
+COMMON/system.d \
 ECUAL/h_exti/h_exti.d \
 ECUAL/led/led_prog.d \
 ECUAL/push_button/PB_prog.d \
@@ -115,6 +119,7 @@ SERVICES/sos/sos_program.d
 
 C_DEPS_AS_ARGS +=  \
 APPLICATION/app/app.d \
+COMMON/system.d \
 ECUAL/h_exti/h_exti.d \
 ECUAL/led/led_prog.d \
 ECUAL/push_button/PB_prog.d \
@@ -142,6 +147,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 APPLICATION/app/app.o: ../APPLICATION/app/app.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+COMMON/system.o: ../COMMON/system.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

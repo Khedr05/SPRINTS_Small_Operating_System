@@ -10,10 +10,24 @@
 
 Std_ReturnType H_EXTI_init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
 {
-	EXT_vINTERRUPT_Init(EXT_INTx);
+	if(EXT_vINTERRUPT_Init(EXT_INTx) == E_OK)
+	{
+		return E_OK;
+	}
+	else
+	{
+		return E_NOT_OK;
+	}
 }
 
 Std_ReturnType H_EXTI_deinit(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
 {
-	EXT_vINTERRUPT_Denit(EXT_INTx);
+	if(EXT_vINTERRUPT_Denit(EXT_INTx) == E_OK)
+	{
+		return E_OK;
+	}
+	else
+	{
+		return E_NOT_OK;
+	}
 }

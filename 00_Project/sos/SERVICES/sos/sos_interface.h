@@ -14,6 +14,7 @@
 // assuming that lower the priority number having higher priority 
 typedef enum
 {
+  PRIORITY_ZERO = 0,	
   PRIORITY_ONE,
   PRIORITY_TWO,
   PRIORITY_THREE,
@@ -23,7 +24,6 @@ typedef enum
   PRIORITY_SEVEN,
   PRIORITY_EIGHT,
   PRIORITY_NINE,
-  PRIORITY_TEN,
   PRIORITY_TOTAL,	
 }enu_task_priority_id_t; 
 typedef struct  
@@ -32,7 +32,7 @@ typedef struct
 	void (*ptr_task_ref)(void*);
 	void *ptr_task_arg;
 	
-}str_tasks_config_t;
+}str_tasks_t;
 
 
 typedef enum
@@ -44,8 +44,6 @@ typedef enum
 	SOS_TASK_DUBLICATED_PIRIORITY,
 	SOS_TASK_NOT_FOUND,
 	SOS_TASK_PRIRORITY_ERROR,
-	SOS_NO_TASKS_TO_RUN,
-	SOS_RUNNING_DISABLED
 }enu_system_status_t;
 
 typedef enum
@@ -92,7 +90,7 @@ enu_system_status_t sos_deinit(void);
                 SOS_TASK_DUBLICATED_PIRIORITY           :   In case of duplicated priority
  *             
  */
-enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id , str_tasks_config_t *str_tasks_config);
+enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id , str_tasks_t *str_tasks_config);
 
 /**
  * @brief                                               :   Function Used to Modify specific task in database 
@@ -106,7 +104,7 @@ enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id 
                 SOS_TASK_NOT_FOUND                      :   In case of not found task 
  *             
  */
-enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id ,str_tasks_config_t *str_tasks_config);
+enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id ,str_tasks_t *str_tasks_config);
 
 /**
  * @brief                                               :   Function Used to delete specific task in database 
@@ -125,20 +123,16 @@ enu_system_status_t sos_delete_task(enu_task_priority_id_t enu_task_priority_id)
  * @name                                                :   sos_run
  * @param[in,out]                                       :   None
  * @param[in]                                           :   None                                                 
- * @return      SOS_NO_TASKS_TO_RUN                     :   In case of Empty Database     
- *              SOS_RUNNING_DISABLED                    :   In case of disable scheduler
- *             
+ * @return							                    :   Void            
  */
-enu_system_status_t sos_run(void);
+void sos_run(void);
 
 /**
  * @brief                                               :   Function Used to disable sos
  * @name                                                :   sos_disable
  * @param[in,out]                                       :   None
  * @param[in]                                           :   None   
- * @return      SOS_STATUS_SUCCESS                      :   In case of Successful Operation     
- *              SOS_STATUS_INVALID_STATE                :   In case of re-disable scheduler or the scheduler is already not run
- *             
+ * @return												:   Void            
  */
-enu_system_status_t sos_disable(void);
+void sos_disable(void);
 #endif /* SOS_INTERFACE_H_ */

@@ -145,6 +145,12 @@
     <Compile Include="COMMON\std_types.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="COMMON\system.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="COMMON\system.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="COMMON\vect_table.h">
       <SubType>compile</SubType>
     </Compile>

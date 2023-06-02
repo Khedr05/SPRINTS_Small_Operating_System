@@ -180,7 +180,7 @@ void TMR_TMR2Stop(void);
  * @return An EN_TIMER_ERROR_T value indicating the success or failure of the operation
  *         (TIMER_OK if the operation succeeded, TIMER_ERROR otherwise)
  */
-EN_TIMER_ERROR_T TIMER_TMR2Start(Uint16_t u16_a_prescaler);
+EN_TIMER_ERROR_T TIMER_TMR2Start(void);
 
 /**
  * @brief Creates a delay using timer_2 in overflow mode

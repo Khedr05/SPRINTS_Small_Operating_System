@@ -11,7 +11,7 @@
 #include "../../MCAL/timer/timer_interface.h"
 
 
-const str_sos_configs_t gl_str_sos_configs =
+const str_sos_helpers_t gl_str_sos_helpers =
 {
    .enu_sos_timer_select                               = TIMER_TWO,
    .str_sos_timer_functions.ptr_timer_init             = TIMER_TMR2NormalModeInit,

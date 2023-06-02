@@ -4,6 +4,8 @@
 
 APPLICATION\app\app.c
 
+COMMON\system.c
+
 ECUAL\h_exti\h_exti.c
 
 ECUAL\led\led_prog.c

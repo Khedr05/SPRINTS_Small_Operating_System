@@ -10,9 +10,6 @@
 #define SOS_CONFIG_H_
 
 
-#define  TIMER_PRESCALLER     256
-#define  MAX_TICK_COUNTS      2147483647UL
-
 typedef enum 
 {
 	TIMER_ZERO,
@@ -24,7 +21,7 @@ typedef struct
 {
 	void (*ptr_timer_init)                 (void*);
 	void (*ptr_timer_deinit)               (void);
-	void (*ptr_timer_start)                (Uint16_t);
+	void (*ptr_timer_start)                (void);
 	void (*ptr_timer_stop)                 (void);
 	void (*ptr_timer_set_Tick_time)        (Uint16_t);
 	void (*ptr_timer_setCallBack)          (void*);
@@ -36,5 +33,5 @@ typedef struct
 {
 	enu_sos_timer_select_t enu_sos_timer_select;
 	str_sos_timer_functions_t str_sos_timer_functions;
-}str_sos_configs_t;
+}str_sos_helpers_t;
 #endif /* SOS_CONFIG_H_ */

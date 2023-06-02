@@ -9,7 +9,14 @@
 #ifndef APP_H_
 #define APP_H_
 
+#include "../../COMMON/system.h"
 
+
+extern ST_led_t gl_str_led_task1;
+extern ST_led_t gl_str_led_task2;
+extern ST_PUSH_BTN_t gl_str_start_button;
+extern ST_EXT_INTERRUPTS_CFG  gl_str_HEXT_Stop_os;
+extern void stop_call_back(void);
 
 typedef enum
 {
