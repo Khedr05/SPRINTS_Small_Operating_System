@@ -198,6 +198,9 @@ enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id,
 			// check that desired task is not null and make sure that it's value is less than PRIORITY_TOTAL
 			if((gl_tasks_db[enu_task_priority_id] != PTR_NULL) && (enu_task_priority_id < PRIORITY_TOTAL))
 			{
+				/*remove old periodicity from The Hyper Period */
+				gl_hyper_period /= ptr_str_task->taskPeriodicity;
+				
 				gl_tasks_db[enu_task_priority_id]   = ptr_str_task;
 				/*Update The Hyper Period */
 				gl_hyper_period *= ptr_str_task->taskPeriodicity;

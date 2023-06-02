@@ -42,6 +42,8 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o) (__mulsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(gesf2.o) (__fp_cmp)
+c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+                              SERVICES/sos/sos_program.o (__udivmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
@@ -142,7 +144,7 @@ Discarded input sections
  .text.sos_delete_task
                 0x00000000       0x32 SERVICES/sos/sos_program.o
  .text.sos_modify_task
-                0x00000000       0x6a SERVICES/sos/sos_program.o
+                0x00000000       0x72 SERVICES/sos/sos_program.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
@@ -206,6 +208,22 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.div
+                0x00000000       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -945,7 +963,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x28da
+.debug_info     0x00000000     0x28d7
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6      0x4c6 APPLICATION/app/app.o
@@ -959,7 +977,7 @@ END GROUP
  .debug_info    0x00001e4d       0x98 MCAL/mcu_cfg/mcu_Prog.o
  .debug_info    0x00001ee5      0x333 MCAL/timer/timer.o
  .debug_info    0x00002218      0x17d SERVICES/sos/sos_config.o
- .debug_info    0x00002395      0x545 SERVICES/sos/sos_program.o
+ .debug_info    0x00002395      0x542 SERVICES/sos/sos_program.o
 
 .debug_abbrev   0x00000000     0x1057
  *(.debug_abbrev)
@@ -977,7 +995,7 @@ END GROUP
  .debug_abbrev  0x00000df5       0xa6 SERVICES/sos/sos_config.o
  .debug_abbrev  0x00000e9b      0x1bc SERVICES/sos/sos_program.o
 
-.debug_line     0x00000000     0x179f
+.debug_line     0x00000000     0x17a5
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000116      0x254 APPLICATION/app/app.o
@@ -991,7 +1009,7 @@ END GROUP
  .debug_line    0x0000101a       0x7a MCAL/mcu_cfg/mcu_Prog.o
  .debug_line    0x00001094      0x315 MCAL/timer/timer.o
  .debug_line    0x000013a9       0x76 SERVICES/sos/sos_config.o
- .debug_line    0x0000141f      0x380 SERVICES/sos/sos_program.o
+ .debug_line    0x0000141f      0x386 SERVICES/sos/sos_program.o
 
 .debug_frame    0x00000000      0x580
  *(.debug_frame)
@@ -1007,7 +1025,7 @@ END GROUP
  .debug_frame   0x00000390       0xf0 MCAL/timer/timer.o
  .debug_frame   0x00000480      0x100 SERVICES/sos/sos_program.o
 
-.debug_str      0x00000000     0x11c0
+.debug_str      0x00000000     0x11ff
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_str     0x00000196      0x540 APPLICATION/app/app.o
@@ -1032,10 +1050,10 @@ END GROUP
                                 0x402 (size before relaxing)
  .debug_str     0x00000f2e      0x12c SERVICES/sos/sos_config.o
                                 0x2d3 (size before relaxing)
- .debug_str     0x0000105a      0x166 SERVICES/sos/sos_program.o
-                                0x5d4 (size before relaxing)
+ .debug_str     0x0000105a      0x1a5 SERVICES/sos/sos_program.o
+                                0x5a2 (size before relaxing)
 
-.debug_loc      0x00000000     0x18e4
+.debug_loc      0x00000000     0x1937
  *(.debug_loc)
  .debug_loc     0x00000000       0x94 APPLICATION/app/app.o
  .debug_loc     0x00000094       0x1f COMMON/system.o
@@ -1045,7 +1063,7 @@ END GROUP
  .debug_loc     0x000004b3      0x6e8 MCAL/dio/dio.o
  .debug_loc     0x00000b9b      0x787 MCAL/exti/exti_prog.o
  .debug_loc     0x00001322      0x200 MCAL/timer/timer.o
- .debug_loc     0x00001522      0x3c2 SERVICES/sos/sos_program.o
+ .debug_loc     0x00001522      0x415 SERVICES/sos/sos_program.o
 
 .debug_macinfo
  *(.debug_macinfo)
