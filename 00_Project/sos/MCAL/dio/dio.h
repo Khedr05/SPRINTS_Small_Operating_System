@@ -19,3 +19,5 @@ void DIO_readpin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type *volt);
 void DIO_togglepin(EN_DIO_Pin_type pin);
 
 #endif /* DIO_H_ */
+
+
