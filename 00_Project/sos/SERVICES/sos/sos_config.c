@@ -6,14 +6,14 @@
  */ 
 
 
-#include "../../COMMON/std_types.h"
+#include "std_types.h"
 #include "sos_config.h"
-#include "../../MCAL/timer/timer_interface.h"
+#include "timer_interface.h"
 
 
 const str_sos_helpers_t gl_str_sos_helpers =
 {
-   .enu_sos_timer_select                               = TIMER_TWO,
+
    .str_sos_timer_functions.ptr_timer_init             = TIMER_TMR2NormalModeInit,
    .str_sos_timer_functions.ptr_timer_deinit           = TIMER_tmr2deinit,
    .str_sos_timer_functions.ptr_timer_start            = TIMER_TMR2Start,

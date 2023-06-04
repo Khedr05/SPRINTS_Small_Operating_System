@@ -90,7 +90,7 @@ enu_system_status_t sos_deinit(void);
                 SOS_TASK_DUBLICATED_PIRIORITY           :   In case of duplicated priority
  *             
  */
-enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id , str_tasks_t *str_tasks_config);
+enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id , str_tasks_t *str_tasks_parameters);
 
 /**
  * @brief                                               :   Function Used to Modify specific task in database 
@@ -104,7 +104,7 @@ enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id 
                 SOS_TASK_NOT_FOUND                      :   In case of not found task 
  *             
  */
-enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id ,str_tasks_t *str_tasks_config);
+enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id ,str_tasks_t *str_tasks_parameters);
 
 /**
  * @brief                                               :   Function Used to delete specific task in database 

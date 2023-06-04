@@ -10,12 +10,7 @@
 #define SOS_CONFIG_H_
 
 
-typedef enum 
-{
-	TIMER_ZERO,
-	TIMER_ONE,
-	TIMER_TWO,
-}enu_sos_timer_select_t;
+
 
 typedef struct
 {
@@ -31,7 +26,6 @@ typedef struct
 
 typedef struct  
 {
-	enu_sos_timer_select_t enu_sos_timer_select;
 	str_sos_timer_functions_t str_sos_timer_functions;
 }str_sos_helpers_t;
 #endif /* SOS_CONFIG_H_ */

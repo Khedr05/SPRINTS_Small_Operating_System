@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000280  00000000  00000000  00001464  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000028d7  00000000  00000000  000016e4  2**0
+  6 .debug_info   00002867  00000000  00000000  000016e4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001057  00000000  00000000  00003fbb  2**0
+  7 .debug_abbrev 0000103f  00000000  00000000  00003f4b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000017a5  00000000  00000000  00005012  2**0
+  8 .debug_line   0000169a  00000000  00000000  00004f8a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000580  00000000  00000000  000067b8  2**2
+  9 .debug_frame  00000580  00000000  00000000  00006624  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000011ff  00000000  00000000  00006d38  2**0
+ 10 .debug_str    0000114b  00000000  00000000  00006ba4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00001937  00000000  00000000  00007f37  2**0
+ 11 .debug_loc    00001937  00000000  00000000  00007cef  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000001b8  00000000  00000000  0000986e  2**0
+ 12 .debug_ranges 000001b8  00000000  00000000  00009626  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -96,67 +96,125 @@ Disassembly of section .text:
       8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000092 <task1>:
+	}
+}
+
+void task1(void*ptr)
+{
+	LED_toggle(&gl_str_led_task1);
       92:	85 e7       	ldi	r24, 0x75	; 117
       94:	90 e0       	ldi	r25, 0x00	; 0
       96:	0e 94 c2 00 	call	0x184	; 0x184 <LED_toggle>
       9a:	08 95       	ret
 
 0000009c <task2>:
+}
+
+
+void task2(void*ptr)
+{
+	LED_toggle(&gl_str_led_task2);
       9c:	83 e7       	ldi	r24, 0x73	; 115
       9e:	90 e0       	ldi	r25, 0x00	; 0
       a0:	0e 94 c2 00 	call	0x184	; 0x184 <LED_toggle>
       a4:	08 95       	ret
 
 000000a6 <app_start>:
+
+enu_app_state_t gl_enu_app_state = APP_RUN_OS ;
+
+
+void app_start(void)
+{
       a6:	cf 93       	push	r28
       a8:	df 93       	push	r29
       aa:	1f 92       	push	r1
       ac:	cd b7       	in	r28, 0x3d	; 61
       ae:	de b7       	in	r29, 0x3e	; 62
+	EN_PUSH_BTN_state_t loc_en_PUSH_BTN_state = PUSH_BTN_STATE_RELEASED;
       b0:	81 e0       	ldi	r24, 0x01	; 1
       b2:	89 83       	std	Y+1, r24	; 0x01
+	if(system_init() == SYSTEM_INIT_OK)
       b4:	0e 94 89 00 	call	0x112	; 0x112 <system_init>
       b8:	81 11       	cpse	r24, r1
       ba:	21 c0       	rjmp	.+66     	; 0xfe <app_start+0x58>
+	{
+		sos_create_task(PRIORITY_ONE,&gl_str_task1_configs);
       bc:	66 e6       	ldi	r22, 0x66	; 102
       be:	70 e0       	ldi	r23, 0x00	; 0
       c0:	81 e0       	ldi	r24, 0x01	; 1
       c2:	0e 94 b5 05 	call	0xb6a	; 0xb6a <sos_create_task>
+		sos_create_task(PRIORITY_TWO,&gl_str_task2_configs);
       c6:	60 e6       	ldi	r22, 0x60	; 96
       c8:	70 e0       	ldi	r23, 0x00	; 0
       ca:	82 e0       	ldi	r24, 0x02	; 2
       cc:	0e 94 b5 05 	call	0xb6a	; 0xb6a <sos_create_task>
+		while (1)
+		{
+			switch(gl_enu_app_state)
       d0:	80 91 88 00 	lds	r24, 0x0088	; 0x800088 <__data_end>
       d4:	88 23       	and	r24, r24
       d6:	19 f0       	breq	.+6      	; 0xde <app_start+0x38>
       d8:	81 30       	cpi	r24, 0x01	; 1
       da:	21 f0       	breq	.+8      	; 0xe4 <app_start+0x3e>
       dc:	f9 cf       	rjmp	.-14     	; 0xd0 <app_start+0x2a>
+			{
+				case APP_RUN_OS :
+				{
+					sos_run();
       de:	0e 94 ea 05 	call	0xbd4	; 0xbd4 <sos_run>
+					break;
       e2:	f6 cf       	rjmp	.-20     	; 0xd0 <app_start+0x2a>
+				}
+				
+				case APP_STOP_OS :
+				{
+					PUSH_BTN_read_state(&gl_str_start_button,&loc_en_PUSH_BTN_state);
       e4:	be 01       	movw	r22, r28
       e6:	6f 5f       	subi	r22, 0xFF	; 255
       e8:	7f 4f       	sbci	r23, 0xFF	; 255
       ea:	80 e7       	ldi	r24, 0x70	; 112
       ec:	90 e0       	ldi	r25, 0x00	; 0
       ee:	0e 94 d7 00 	call	0x1ae	; 0x1ae <PUSH_BTN_read_state>
+					if(loc_en_PUSH_BTN_state == PUSH_BTN_STATE_RELEASED)
       f2:	89 81       	ldd	r24, Y+1	; 0x01
       f4:	81 30       	cpi	r24, 0x01	; 1
       f6:	61 f7       	brne	.-40     	; 0xd0 <app_start+0x2a>
+					{
+						gl_enu_app_state = APP_RUN_OS;
       f8:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__data_end>
       fc:	e9 cf       	rjmp	.-46     	; 0xd0 <app_start+0x2a>
+					break;
+				}
+			}
+		}
+	}
+}
       fe:	0f 90       	pop	r0
      100:	df 91       	pop	r29
      102:	cf 91       	pop	r28
      104:	08 95       	ret
 
 00000106 <stop_call_back>:
+	LED_toggle(&gl_str_led_task2);
+}
+
+void stop_call_back(void)
+{
+	sos_disable();
      106:	0e 94 73 06 	call	0xce6	; 0xce6 <sos_disable>
+	gl_enu_app_state =  APP_STOP_OS ;
      10a:	81 e0       	ldi	r24, 0x01	; 1
      10c:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__data_end>
      110:	08 95       	ret
 
 00000112 <system_init>:
+
+
+enu_system_init_status_t system_init(void)
+{
+	enu_system_init_status_t ret = SYSTEM_INIT_NOK;
+	if(LED_initialize(&gl_str_led_task1) == E_OK && LED_initialize(&gl_str_led_task2) == E_OK)
      112:	85 e7       	ldi	r24, 0x75	; 117
      114:	90 e0       	ldi	r25, 0x00	; 0
      116:	0e 94 b7 00 	call	0x16e	; 0x16e <LED_initialize>
@@ -167,19 +225,31 @@ Disassembly of section .text:
      122:	0e 94 b7 00 	call	0x16e	; 0x16e <LED_initialize>
      126:	81 30       	cpi	r24, 0x01	; 1
      128:	a1 f4       	brne	.+40     	; 0x152 <system_init+0x40>
+	{
+		if(PUSH_BTN_intialize(&gl_str_start_button) == E_OK)
      12a:	80 e7       	ldi	r24, 0x70	; 112
      12c:	90 e0       	ldi	r25, 0x00	; 0
      12e:	0e 94 cc 00 	call	0x198	; 0x198 <PUSH_BTN_intialize>
      132:	81 30       	cpi	r24, 0x01	; 1
      134:	81 f4       	brne	.+32     	; 0x156 <system_init+0x44>
+		{
+			if(H_EXTI_init(&gl_str_HEXT_Stop_os) == E_OK)
      136:	8c e6       	ldi	r24, 0x6C	; 108
      138:	90 e0       	ldi	r25, 0x00	; 0
      13a:	0e 94 b1 00 	call	0x162	; 0x162 <H_EXTI_init>
      13e:	81 30       	cpi	r24, 0x01	; 1
      140:	61 f4       	brne	.+24     	; 0x15a <system_init+0x48>
+			{
+					if(sos_init() == SOS_STATUS_SUCCESS)
      142:	0e 94 88 05 	call	0xb10	; 0xb10 <sos_init>
      146:	88 23       	and	r24, r24
      148:	51 f0       	breq	.+20     	; 0x15e <system_init+0x4c>
+
+
+
+enu_system_init_status_t system_init(void)
+{
+	enu_system_init_status_t ret = SYSTEM_INIT_NOK;
      14a:	81 e0       	ldi	r24, 0x01	; 1
      14c:	08 95       	ret
      14e:	81 e0       	ldi	r24, 0x01	; 1
@@ -190,17 +260,48 @@ Disassembly of section .text:
      158:	08 95       	ret
      15a:	81 e0       	ldi	r24, 0x01	; 1
      15c:	08 95       	ret
+		{
+			if(H_EXTI_init(&gl_str_HEXT_Stop_os) == E_OK)
+			{
+					if(sos_init() == SOS_STATUS_SUCCESS)
+					{
+						ret = SYSTEM_INIT_OK;
      15e:	80 e0       	ldi	r24, 0x00	; 0
+					}	
+			}		
+		}	
+	}
+	return ret;
      160:	08 95       	ret
 
 00000162 <H_EXTI_init>:
+
+#include "h_exti.h"
+
+Std_ReturnType H_EXTI_init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
+{
+	if(EXT_vINTERRUPT_Init(EXT_INTx) == E_OK)
      162:	0e 94 d3 02 	call	0x5a6	; 0x5a6 <EXT_vINTERRUPT_Init>
      166:	81 30       	cpi	r24, 0x01	; 1
      168:	09 f0       	breq	.+2      	; 0x16c <H_EXTI_init+0xa>
+	{
+		return E_OK;
+	}
+	else
+	{
+		return E_NOT_OK;
      16a:	80 e0       	ldi	r24, 0x00	; 0
+	}
+}
      16c:	08 95       	ret
 
 0000016e <LED_initialize>:
+	{
+		
+		DIO_writepin(led->DIO_Pin_type, OUTPUT_LOW);
+	}
+	return ret;
+}
      16e:	00 97       	sbiw	r24, 0x00	; 0
      170:	39 f0       	breq	.+14     	; 0x180 <LED_initialize+0x12>
      172:	fc 01       	movw	r30, r24
@@ -213,29 +314,82 @@ Disassembly of section .text:
      182:	08 95       	ret
 
 00000184 <LED_toggle>:
+Std_ReturnType LED_toggle(const ST_led_t *led)
+{
+	Std_ReturnType ret = E_OK;
+	if(PTR_NULL == led)
      184:	00 97       	sbiw	r24, 0x00	; 0
      186:	31 f0       	breq	.+12     	; 0x194 <LED_toggle+0x10>
      188:	fc 01       	movw	r30, r24
+	{
+		ret = E_NOT_OK;
+	}
+	else
+	{
+	   DIO_togglepin(led->DIO_Pin_type);
      18a:	80 81       	ld	r24, Z
      18c:	0e 94 57 02 	call	0x4ae	; 0x4ae <DIO_togglepin>
+	}
+	return ret;
+}
+Std_ReturnType LED_toggle(const ST_led_t *led)
+{
+	Std_ReturnType ret = E_OK;
      190:	81 e0       	ldi	r24, 0x01	; 1
      192:	08 95       	ret
+	if(PTR_NULL == led)
+	{
+		ret = E_NOT_OK;
      194:	80 e0       	ldi	r24, 0x00	; 0
+	else
+	{
+	   DIO_togglepin(led->DIO_Pin_type);
+	}
+	return ret;
+}
      196:	08 95       	ret
 
 00000198 <PUSH_BTN_intialize>:
+#include"PB_interface.h"
+
+Std_ReturnType PUSH_BTN_intialize(const ST_PUSH_BTN_t *btn)
+{
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == btn)
      198:	00 97       	sbiw	r24, 0x00	; 0
      19a:	39 f0       	breq	.+14     	; 0x1aa <PUSH_BTN_intialize+0x12>
      19c:	fc 01       	movw	r30, r24
+	{
+		ret = E_NOT_OK;
+	}
+	else
+	{
+		DIO_initpin(btn->PUSH_BTN_pin,INFREE);
      19e:	61 e0       	ldi	r22, 0x01	; 1
      1a0:	80 81       	ld	r24, Z
      1a2:	0e 94 19 01 	call	0x232	; 0x232 <DIO_initpin>
+		ret = E_OK;
      1a6:	81 e0       	ldi	r24, 0x01	; 1
      1a8:	08 95       	ret
+Std_ReturnType PUSH_BTN_intialize(const ST_PUSH_BTN_t *btn)
+{
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == btn)
+	{
+		ret = E_NOT_OK;
      1aa:	80 e0       	ldi	r24, 0x00	; 0
+	{
+		DIO_initpin(btn->PUSH_BTN_pin,INFREE);
+		ret = E_OK;
+	}
+	return ret;
+}
      1ac:	08 95       	ret
 
 000001ae <PUSH_BTN_read_state>:
+
+Std_ReturnType PUSH_BTN_read_state(const ST_PUSH_BTN_t *btn , EN_PUSH_BTN_state_t *btn_state)
+{
      1ae:	ef 92       	push	r14
      1b0:	ff 92       	push	r15
      1b2:	0f 93       	push	r16
@@ -245,6 +399,8 @@ Disassembly of section .text:
      1ba:	1f 92       	push	r1
      1bc:	cd b7       	in	r28, 0x3d	; 61
      1be:	de b7       	in	r29, 0x3e	; 62
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == btn || PTR_NULL == btn_state )
      1c0:	00 97       	sbiw	r24, 0x00	; 0
      1c2:	39 f1       	breq	.+78     	; 0x212 <PUSH_BTN_read_state+0x64>
      1c4:	61 15       	cp	r22, r1
@@ -252,42 +408,85 @@ Disassembly of section .text:
      1c8:	31 f1       	breq	.+76     	; 0x216 <PUSH_BTN_read_state+0x68>
      1ca:	7b 01       	movw	r14, r22
      1cc:	8c 01       	movw	r16, r24
+	{
+		ret = E_NOT_OK;
+	}
+	else
+	{
+		EN_DIO_PinVoltage_type pin_logic_status = OUTPUT_LOW;
      1ce:	19 82       	std	Y+1, r1	; 0x01
+		DIO_readpin(btn->PUSH_BTN_pin,&pin_logic_status);
      1d0:	be 01       	movw	r22, r28
      1d2:	6f 5f       	subi	r22, 0xFF	; 255
      1d4:	7f 4f       	sbci	r23, 0xFF	; 255
      1d6:	fc 01       	movw	r30, r24
      1d8:	80 81       	ld	r24, Z
      1da:	0e 94 16 02 	call	0x42c	; 0x42c <DIO_readpin>
+		if(PUSH_BTN_PULL_UP == btn->PUSH_BTN_connection)
      1de:	f8 01       	movw	r30, r16
      1e0:	82 81       	ldd	r24, Z+2	; 0x02
      1e2:	81 11       	cpse	r24, r1
      1e4:	09 c0       	rjmp	.+18     	; 0x1f8 <PUSH_BTN_read_state+0x4a>
+		{
+			if(OUTPUT_HIGH == pin_logic_status)
      1e6:	89 81       	ldd	r24, Y+1	; 0x01
      1e8:	81 30       	cpi	r24, 0x01	; 1
      1ea:	19 f4       	brne	.+6      	; 0x1f2 <PUSH_BTN_read_state+0x44>
+			{
+				*btn_state = PUSH_BTN_STATE_RELEASED;
      1ec:	f7 01       	movw	r30, r14
      1ee:	80 83       	st	Z, r24
      1f0:	0e c0       	rjmp	.+28     	; 0x20e <PUSH_BTN_read_state+0x60>
+			}
+			else
+			{
+				*btn_state = PUSH_BTN_STATE_PRESSED;
      1f2:	f7 01       	movw	r30, r14
      1f4:	10 82       	st	Z, r1
      1f6:	0b c0       	rjmp	.+22     	; 0x20e <PUSH_BTN_read_state+0x60>
+			}
+		}
+		else if(PUSH_BTN_PULL_DOWN == btn->PUSH_BTN_connection)
      1f8:	81 30       	cpi	r24, 0x01	; 1
      1fa:	49 f4       	brne	.+18     	; 0x20e <PUSH_BTN_read_state+0x60>
+		{
+			if(OUTPUT_LOW == pin_logic_status)
      1fc:	89 81       	ldd	r24, Y+1	; 0x01
      1fe:	81 11       	cpse	r24, r1
      200:	03 c0       	rjmp	.+6      	; 0x208 <PUSH_BTN_read_state+0x5a>
+			{
+				*btn_state = PUSH_BTN_STATE_PRESSED;
      202:	f7 01       	movw	r30, r14
      204:	10 82       	st	Z, r1
      206:	03 c0       	rjmp	.+6      	; 0x20e <PUSH_BTN_read_state+0x60>
+			}
+			else
+			{
+				*btn_state = PUSH_BTN_STATE_RELEASED;
      208:	81 e0       	ldi	r24, 0x01	; 1
      20a:	f7 01       	movw	r30, r14
      20c:	80 83       	st	Z, r24
+			}
+		}
+		else{/* nothing */}
+		ret = E_OK;
      20e:	81 e0       	ldi	r24, 0x01	; 1
      210:	03 c0       	rjmp	.+6      	; 0x218 <PUSH_BTN_read_state+0x6a>
+Std_ReturnType PUSH_BTN_read_state(const ST_PUSH_BTN_t *btn , EN_PUSH_BTN_state_t *btn_state)
+{
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == btn || PTR_NULL == btn_state )
+	{
+		ret = E_NOT_OK;
      212:	80 e0       	ldi	r24, 0x00	; 0
      214:	01 c0       	rjmp	.+2      	; 0x218 <PUSH_BTN_read_state+0x6a>
      216:	80 e0       	ldi	r24, 0x00	; 0
+		else{/* nothing */}
+		ret = E_OK;
+	}
+
+	return ret;
+}
      218:	0f 90       	pop	r0
      21a:	df 91       	pop	r29
      21c:	cf 91       	pop	r28
@@ -298,12 +497,25 @@ Disassembly of section .text:
      226:	08 95       	ret
 
 00000228 <main>:
+
+#include "APPLICATION/app/app.h"
+
+int main(void)
+{
+	app_start();
      228:	0e 94 53 00 	call	0xa6	; 0xa6 <app_start>
+}
      22c:	80 e0       	ldi	r24, 0x00	; 0
      22e:	90 e0       	ldi	r25, 0x00	; 0
      230:	08 95       	ret
 
 00000232 <DIO_initpin>:
+
+				CLEAR_BIT(DIO_PORTC_PORT_REG,pin_num);
+				break;
+				case PORT_D:
+
+				CLEAR_BIT(DIO_PORTD_PORT_REG,pin_num);
      232:	98 2f       	mov	r25, r24
      234:	96 95       	lsr	r25
      236:	96 95       	lsr	r25
@@ -559,11 +771,22 @@ Disassembly of section .text:
      42a:	08 95       	ret
 
 0000042c <DIO_readpin>:
+	}
+
+}
+void  DIO_readpin(EN_DIO_Pin_type pin,EN_DIO_PinVoltage_type *volt)
+{
+	EN_DIO_Port_type port = pin/8 ;
      42c:	98 2f       	mov	r25, r24
      42e:	96 95       	lsr	r25
      430:	96 95       	lsr	r25
      432:	96 95       	lsr	r25
+	Uint8_t pin_num =pin % 8;
      434:	87 70       	andi	r24, 0x07	; 7
+	if (pin_num < 8)
+	{
+
+		switch(port)
      436:	91 30       	cpi	r25, 0x01	; 1
      438:	99 f0       	breq	.+38     	; 0x460 <DIO_readpin+0x34>
      43a:	28 f0       	brcs	.+10     	; 0x446 <DIO_readpin+0x1a>
@@ -572,6 +795,10 @@ Disassembly of section .text:
      440:	93 30       	cpi	r25, 0x03	; 3
      442:	41 f1       	breq	.+80     	; 0x494 <DIO_readpin+0x68>
      444:	08 95       	ret
+		{
+			case PORT_A:
+
+			*volt=GET_BIT(DIO_PORTA_PIN_REG,pin_num);
      446:	29 b3       	in	r18, 0x19	; 25
      448:	30 e0       	ldi	r19, 0x00	; 0
      44a:	a9 01       	movw	r20, r18
@@ -584,7 +811,11 @@ Disassembly of section .text:
      458:	81 70       	andi	r24, 0x01	; 1
      45a:	fb 01       	movw	r30, r22
      45c:	80 83       	st	Z, r24
+			break;
      45e:	08 95       	ret
+			case PORT_B:
+
+			*volt=GET_BIT(DIO_PORTB_PIN_REG,pin_num);
      460:	26 b3       	in	r18, 0x16	; 22
      462:	30 e0       	ldi	r19, 0x00	; 0
      464:	a9 01       	movw	r20, r18
@@ -597,7 +828,11 @@ Disassembly of section .text:
      472:	81 70       	andi	r24, 0x01	; 1
      474:	fb 01       	movw	r30, r22
      476:	80 83       	st	Z, r24
+			break;
      478:	08 95       	ret
+			case PORT_C:
+
+			*volt=GET_BIT(DIO_PORTC_PIN_REG,pin_num);
      47a:	23 b3       	in	r18, 0x13	; 19
      47c:	30 e0       	ldi	r19, 0x00	; 0
      47e:	a9 01       	movw	r20, r18
@@ -610,7 +845,11 @@ Disassembly of section .text:
      48c:	81 70       	andi	r24, 0x01	; 1
      48e:	fb 01       	movw	r30, r22
      490:	80 83       	st	Z, r24
+			break;
      492:	08 95       	ret
+			case PORT_D:
+
+			*volt=GET_BIT(DIO_PORTD_PIN_REG,pin_num);
      494:	20 b3       	in	r18, 0x10	; 16
      496:	30 e0       	ldi	r19, 0x00	; 0
      498:	a9 01       	movw	r20, r18
@@ -626,11 +865,21 @@ Disassembly of section .text:
      4ac:	08 95       	ret
 
 000004ae <DIO_togglepin>:
+	{
+	}
+}
+void  DIO_togglepin(EN_DIO_Pin_type pin)
+{
+	EN_DIO_Port_type port = pin/8 ;
      4ae:	98 2f       	mov	r25, r24
      4b0:	96 95       	lsr	r25
      4b2:	96 95       	lsr	r25
      4b4:	96 95       	lsr	r25
+	Uint8_t pin_num =pin % 8;
      4b6:	87 70       	andi	r24, 0x07	; 7
+	if (pin_num< 8)
+	{
+		switch(port)
      4b8:	91 30       	cpi	r25, 0x01	; 1
      4ba:	99 f0       	breq	.+38     	; 0x4e2 <DIO_togglepin+0x34>
      4bc:	28 f0       	brcs	.+10     	; 0x4c8 <DIO_togglepin+0x1a>
@@ -639,6 +888,9 @@ Disassembly of section .text:
      4c2:	93 30       	cpi	r25, 0x03	; 3
      4c4:	41 f1       	breq	.+80     	; 0x516 <DIO_togglepin+0x68>
      4c6:	08 95       	ret
+		{
+			case PORT_A:
+			TOGGLE_BIT(DIO_PORTA_PORT_REG,pin_num);
      4c8:	4b b3       	in	r20, 0x1b	; 27
      4ca:	21 e0       	ldi	r18, 0x01	; 1
      4cc:	30 e0       	ldi	r19, 0x00	; 0
@@ -651,7 +903,10 @@ Disassembly of section .text:
      4da:	cb 01       	movw	r24, r22
      4dc:	84 27       	eor	r24, r20
      4de:	8b bb       	out	0x1b, r24	; 27
+			break;
      4e0:	08 95       	ret
+			case PORT_B:
+			TOGGLE_BIT(DIO_PORTB_PORT_REG,pin_num);
      4e2:	48 b3       	in	r20, 0x18	; 24
      4e4:	21 e0       	ldi	r18, 0x01	; 1
      4e6:	30 e0       	ldi	r19, 0x00	; 0
@@ -664,7 +919,10 @@ Disassembly of section .text:
      4f4:	cb 01       	movw	r24, r22
      4f6:	84 27       	eor	r24, r20
      4f8:	88 bb       	out	0x18, r24	; 24
+			break;
      4fa:	08 95       	ret
+			case PORT_C:
+			TOGGLE_BIT(DIO_PORTC_PORT_REG,pin_num);
      4fc:	45 b3       	in	r20, 0x15	; 21
      4fe:	21 e0       	ldi	r18, 0x01	; 1
      500:	30 e0       	ldi	r19, 0x00	; 0
@@ -677,7 +935,10 @@ Disassembly of section .text:
      50e:	cb 01       	movw	r24, r22
      510:	84 27       	eor	r24, r20
      512:	85 bb       	out	0x15, r24	; 21
+			break;
      514:	08 95       	ret
+			case PORT_D:
+			TOGGLE_BIT(DIO_PORTD_PORT_REG,pin_num);
      516:	42 b3       	in	r20, 0x12	; 18
      518:	21 e0       	ldi	r18, 0x01	; 1
      51a:	30 e0       	ldi	r19, 0x00	; 0
@@ -693,6 +954,12 @@ Disassembly of section .text:
      52e:	08 95       	ret
 
 00000530 <EXT0_INTERRUPT_SetInterruptHandler>:
+			break;
+		}
+		}
+	}
+	return ret;
+}
      530:	00 97       	sbiw	r24, 0x00	; 0
      532:	31 f0       	breq	.+12     	; 0x540 <EXT0_INTERRUPT_SetInterruptHandler+0x10>
      534:	90 93 8e 00 	sts	0x008E, r25	; 0x80008e <INT0_InterruptHandler+0x1>
@@ -723,9 +990,21 @@ Disassembly of section .text:
      56a:	08 95       	ret
 
 0000056c <EXT_INTERRUPT_SetInterruptHandler>:
+
+Std_ReturnType EXT_INTERRUPT_SetInterruptHandler(const ST_EXT_INTERRUPTS_CFG *EXT_INTx)
+{
+
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == EXT_INTx)
      56c:	00 97       	sbiw	r24, 0x00	; 0
      56e:	b9 f0       	breq	.+46     	; 0x59e <EXT_INTERRUPT_SetInterruptHandler+0x32>
      570:	fc 01       	movw	r30, r24
+	{
+		ret = E_NOT_OK;
+	}
+	else
+	{
+		switch(EXT_INTx->EXTERNAL_INTERRUPRT_Number)
      572:	82 81       	ldd	r24, Z+2	; 0x02
      574:	81 30       	cpi	r24, 0x01	; 1
      576:	49 f0       	breq	.+18     	; 0x58a <EXT_INTERRUPT_SetInterruptHandler+0x1e>
@@ -733,31 +1012,78 @@ Disassembly of section .text:
      57a:	82 30       	cpi	r24, 0x02	; 2
      57c:	59 f0       	breq	.+22     	; 0x594 <EXT_INTERRUPT_SetInterruptHandler+0x28>
      57e:	11 c0       	rjmp	.+34     	; 0x5a2 <EXT_INTERRUPT_SetInterruptHandler+0x36>
+		{
+			case EXT0_INTERRUPTS:
+			{
+				ret = EXT0_INTERRUPT_SetInterruptHandler(EXT_INTx->INTERRUPT_EXTERNAL_HANDLER);
      580:	80 81       	ld	r24, Z
      582:	91 81       	ldd	r25, Z+1	; 0x01
      584:	0e 94 98 02 	call	0x530	; 0x530 <EXT0_INTERRUPT_SetInterruptHandler>
+				break;
      588:	08 95       	ret
+			}
+			case EXT1_INTERRUPTS:
+			{
+				ret = EXT1_INTERRUPT_SetInterruptHandler(EXT_INTx->INTERRUPT_EXTERNAL_HANDLER);
      58a:	80 81       	ld	r24, Z
      58c:	91 81       	ldd	r25, Z+1	; 0x01
      58e:	0e 94 a2 02 	call	0x544	; 0x544 <EXT1_INTERRUPT_SetInterruptHandler>
+				break;
      592:	08 95       	ret
+			}
+			case EXT2_INTERRUPTS:
+			{
+				ret = EXT2_INTERRUPT_SetInterruptHandler(EXT_INTx->INTERRUPT_EXTERNAL_HANDLER);
      594:	80 81       	ld	r24, Z
      596:	91 81       	ldd	r25, Z+1	; 0x01
      598:	0e 94 ac 02 	call	0x558	; 0x558 <EXT2_INTERRUPT_SetInterruptHandler>
+				
+				break;
      59c:	08 95       	ret
+{
+
+	Std_ReturnType ret = E_NOT_OK;
+	if(PTR_NULL == EXT_INTx)
+	{
+		ret = E_NOT_OK;
      59e:	80 e0       	ldi	r24, 0x00	; 0
      5a0:	08 95       	ret
+
+
+Std_ReturnType EXT_INTERRUPT_SetInterruptHandler(const ST_EXT_INTERRUPTS_CFG *EXT_INTx)
+{
+
+	Std_ReturnType ret = E_NOT_OK;
      5a2:	80 e0       	ldi	r24, 0x00	; 0
+				break;
+			}
+		}
+	}
+	return ret;
+}
      5a4:	08 95       	ret
 
 000005a6 <EXT_vINTERRUPT_Init>:
+
+
+Std_ReturnType EXT_vINTERRUPT_Init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
+{
      5a6:	1f 93       	push	r17
      5a8:	cf 93       	push	r28
      5aa:	df 93       	push	r29
+	Std_ReturnType ret = E_NOT_OK;
+
+	if(PTR_NULL == EXT_INTx)
      5ac:	00 97       	sbiw	r24, 0x00	; 0
      5ae:	09 f4       	brne	.+2      	; 0x5b2 <EXT_vINTERRUPT_Init+0xc>
      5b0:	97 c0       	rjmp	.+302    	; 0x6e0 <EXT_vINTERRUPT_Init+0x13a>
      5b2:	ec 01       	movw	r28, r24
+	{
+		ret = E_NOT_OK;
+	}
+	else
+	{
+		switch(EXT_INTx->EXTERNAL_INTERRUPRT_Number)
      5b4:	8a 81       	ldd	r24, Y+2	; 0x02
      5b6:	81 30       	cpi	r24, 0x01	; 1
      5b8:	e9 f1       	breq	.+122    	; 0x634 <EXT_vINTERRUPT_Init+0x8e>
@@ -766,138 +1092,264 @@ Disassembly of section .text:
      5be:	09 f4       	brne	.+2      	; 0x5c2 <EXT_vINTERRUPT_Init+0x1c>
      5c0:	71 c0       	rjmp	.+226    	; 0x6a4 <EXT_vINTERRUPT_Init+0xfe>
      5c2:	90 c0       	rjmp	.+288    	; 0x6e4 <EXT_vINTERRUPT_Init+0x13e>
+		{
+			case EXT0_INTERRUPTS:
+			{
+
+				if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == LOW_LEVEL_SENSE_CONTROL)
      5c4:	8b 81       	ldd	r24, Y+3	; 0x03
      5c6:	81 11       	cpse	r24, r1
      5c8:	0a c0       	rjmp	.+20     	; 0x5de <EXT_vINTERRUPT_Init+0x38>
+				{
+					MCU_vEnableInterrupt();
      5ca:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT0_BITS);
      5ce:	8b b7       	in	r24, 0x3b	; 59
      5d0:	80 64       	ori	r24, 0x40	; 64
      5d2:	8b bf       	out	0x3b, r24	; 59
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC01_BITS);
      5d4:	85 b7       	in	r24, 0x35	; 53
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC00_BITS);
      5d6:	8c 7f       	andi	r24, 0xFC	; 252
      5d8:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      5da:	11 e0       	ldi	r17, 0x01	; 1
      5dc:	27 c0       	rjmp	.+78     	; 0x62c <EXT_vINTERRUPT_Init+0x86>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == ANY_LOGICAL_SENSE_CONTROL)
      5de:	81 30       	cpi	r24, 0x01	; 1
      5e0:	59 f4       	brne	.+22     	; 0x5f8 <EXT_vINTERRUPT_Init+0x52>
+				{
+					MCU_vEnableInterrupt();
      5e2:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT0_BITS);
      5e6:	8b b7       	in	r24, 0x3b	; 59
      5e8:	80 64       	ori	r24, 0x40	; 64
      5ea:	8b bf       	out	0x3b, r24	; 59
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC01_BITS);
      5ec:	85 b7       	in	r24, 0x35	; 53
      5ee:	8d 7f       	andi	r24, 0xFD	; 253
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC00_BITS);
      5f0:	81 60       	ori	r24, 0x01	; 1
      5f2:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      5f4:	11 e0       	ldi	r17, 0x01	; 1
      5f6:	1a c0       	rjmp	.+52     	; 0x62c <EXT_vINTERRUPT_Init+0x86>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == FALLING_EDGE_SENSE_CONTROL)
      5f8:	82 30       	cpi	r24, 0x02	; 2
      5fa:	59 f4       	brne	.+22     	; 0x612 <EXT_vINTERRUPT_Init+0x6c>
+				{
+					MCU_vEnableInterrupt();
      5fc:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT0_BITS);
      600:	8b b7       	in	r24, 0x3b	; 59
      602:	80 64       	ori	r24, 0x40	; 64
      604:	8b bf       	out	0x3b, r24	; 59
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC01_BITS);
      606:	85 b7       	in	r24, 0x35	; 53
      608:	82 60       	ori	r24, 0x02	; 2
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC00_BITS);
      60a:	8e 7f       	andi	r24, 0xFE	; 254
      60c:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      60e:	11 e0       	ldi	r17, 0x01	; 1
      610:	0d c0       	rjmp	.+26     	; 0x62c <EXT_vINTERRUPT_Init+0x86>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == RISING_EDGE_SENSE_CONTROL)
      612:	83 30       	cpi	r24, 0x03	; 3
      614:	51 f4       	brne	.+20     	; 0x62a <EXT_vINTERRUPT_Init+0x84>
+				{
+					MCU_vEnableInterrupt();
      616:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT0_BITS);
      61a:	8b b7       	in	r24, 0x3b	; 59
      61c:	80 64       	ori	r24, 0x40	; 64
      61e:	8b bf       	out	0x3b, r24	; 59
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC01_BITS);
      620:	85 b7       	in	r24, 0x35	; 53
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC00_BITS);
      622:	83 60       	ori	r24, 0x03	; 3
      624:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      626:	11 e0       	ldi	r17, 0x01	; 1
      628:	01 c0       	rjmp	.+2      	; 0x62c <EXT_vINTERRUPT_Init+0x86>
+				}
+				else
+				{
+					ret = E_NOT_OK;
      62a:	10 e0       	ldi	r17, 0x00	; 0
+				}
+				EXT_INTERRUPT_SetInterruptHandler(EXT_INTx);
      62c:	ce 01       	movw	r24, r28
      62e:	0e 94 b6 02 	call	0x56c	; 0x56c <EXT_INTERRUPT_SetInterruptHandler>
+				break;
      632:	59 c0       	rjmp	.+178    	; 0x6e6 <EXT_vINTERRUPT_Init+0x140>
+			}
+			case EXT1_INTERRUPTS:
+			{
+
+				if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == LOW_LEVEL_SENSE_CONTROL)
      634:	8b 81       	ldd	r24, Y+3	; 0x03
      636:	81 11       	cpse	r24, r1
      638:	0a c0       	rjmp	.+20     	; 0x64e <EXT_vINTERRUPT_Init+0xa8>
+				{
+					MCU_vEnableInterrupt();
      63a:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT1_BITS);
      63e:	8b b7       	in	r24, 0x3b	; 59
      640:	80 68       	ori	r24, 0x80	; 128
      642:	8b bf       	out	0x3b, r24	; 59
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC11_BITS);
      644:	85 b7       	in	r24, 0x35	; 53
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC10_BITS);
      646:	83 7f       	andi	r24, 0xF3	; 243
      648:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      64a:	11 e0       	ldi	r17, 0x01	; 1
      64c:	27 c0       	rjmp	.+78     	; 0x69c <EXT_vINTERRUPT_Init+0xf6>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == ANY_LOGICAL_SENSE_CONTROL)
      64e:	81 30       	cpi	r24, 0x01	; 1
      650:	59 f4       	brne	.+22     	; 0x668 <EXT_vINTERRUPT_Init+0xc2>
+				{
+					MCU_vEnableInterrupt();
      652:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT1_BITS);
      656:	8b b7       	in	r24, 0x3b	; 59
      658:	80 68       	ori	r24, 0x80	; 128
      65a:	8b bf       	out	0x3b, r24	; 59
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC11_BITS);
      65c:	85 b7       	in	r24, 0x35	; 53
      65e:	87 7f       	andi	r24, 0xF7	; 247
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC10_BITS);
      660:	84 60       	ori	r24, 0x04	; 4
      662:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      664:	11 e0       	ldi	r17, 0x01	; 1
      666:	1a c0       	rjmp	.+52     	; 0x69c <EXT_vINTERRUPT_Init+0xf6>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == FALLING_EDGE_SENSE_CONTROL)
      668:	82 30       	cpi	r24, 0x02	; 2
      66a:	59 f4       	brne	.+22     	; 0x682 <EXT_vINTERRUPT_Init+0xdc>
+				{
+					MCU_vEnableInterrupt();
      66c:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT1_BITS);
      670:	8b b7       	in	r24, 0x3b	; 59
      672:	80 68       	ori	r24, 0x80	; 128
      674:	8b bf       	out	0x3b, r24	; 59
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC11_BITS);
      676:	85 b7       	in	r24, 0x35	; 53
      678:	88 60       	ori	r24, 0x08	; 8
+					CLEAR_BIT(MCUCR_REG,MCUCR_REG_ISC10_BITS);
      67a:	8b 7f       	andi	r24, 0xFB	; 251
      67c:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      67e:	11 e0       	ldi	r17, 0x01	; 1
      680:	0d c0       	rjmp	.+26     	; 0x69c <EXT_vINTERRUPT_Init+0xf6>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == RISING_EDGE_SENSE_CONTROL)
      682:	83 30       	cpi	r24, 0x03	; 3
      684:	51 f4       	brne	.+20     	; 0x69a <EXT_vINTERRUPT_Init+0xf4>
+				{
+					MCU_vEnableInterrupt();
      686:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT1_BITS);
      68a:	8b b7       	in	r24, 0x3b	; 59
      68c:	80 68       	ori	r24, 0x80	; 128
      68e:	8b bf       	out	0x3b, r24	; 59
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC11_BITS);
      690:	85 b7       	in	r24, 0x35	; 53
+					SET_BIT(MCUCR_REG,MCUCR_REG_ISC10_BITS);
      692:	8c 60       	ori	r24, 0x0C	; 12
      694:	85 bf       	out	0x35, r24	; 53
+					ret = E_OK;
      696:	11 e0       	ldi	r17, 0x01	; 1
      698:	01 c0       	rjmp	.+2      	; 0x69c <EXT_vINTERRUPT_Init+0xf6>
+				}
+				else
+				{
+					ret = E_NOT_OK;
      69a:	10 e0       	ldi	r17, 0x00	; 0
+				}
+				EXT_INTERRUPT_SetInterruptHandler(EXT_INTx);
      69c:	ce 01       	movw	r24, r28
      69e:	0e 94 b6 02 	call	0x56c	; 0x56c <EXT_INTERRUPT_SetInterruptHandler>
+				break;
      6a2:	21 c0       	rjmp	.+66     	; 0x6e6 <EXT_vINTERRUPT_Init+0x140>
+			}
+			case EXT2_INTERRUPTS:
+			{
+
+				if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == FALLING_EDGE_SENSE_CONTROL)
      6a4:	8b 81       	ldd	r24, Y+3	; 0x03
      6a6:	82 30       	cpi	r24, 0x02	; 2
      6a8:	51 f4       	brne	.+20     	; 0x6be <EXT_vINTERRUPT_Init+0x118>
+				{
+					MCU_vEnableInterrupt();
      6aa:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT2_BITS);
      6ae:	8b b7       	in	r24, 0x3b	; 59
      6b0:	80 62       	ori	r24, 0x20	; 32
      6b2:	8b bf       	out	0x3b, r24	; 59
+					CLEAR_BIT(MCUCSR_REG,MCUCSR_REG_ISC2_BITS);
      6b4:	84 b7       	in	r24, 0x34	; 52
      6b6:	8f 7b       	andi	r24, 0xBF	; 191
      6b8:	84 bf       	out	0x34, r24	; 52
+					ret = E_OK;
      6ba:	11 e0       	ldi	r17, 0x01	; 1
      6bc:	0d c0       	rjmp	.+26     	; 0x6d8 <EXT_vINTERRUPT_Init+0x132>
+				}
+				else if(EXT_INTx->EXTERNAL_INTERRUPRT_Sense_Control == RISING_EDGE_SENSE_CONTROL)
      6be:	83 30       	cpi	r24, 0x03	; 3
      6c0:	51 f4       	brne	.+20     	; 0x6d6 <EXT_vINTERRUPT_Init+0x130>
+				{
+					MCU_vEnableInterrupt();
      6c2:	0e 94 ed 03 	call	0x7da	; 0x7da <MCU_vEnableInterrupt>
+					SET_BIT(GICR_REG,GICR_REG_INT2_BITS);
      6c6:	8b b7       	in	r24, 0x3b	; 59
      6c8:	80 62       	ori	r24, 0x20	; 32
      6ca:	8b bf       	out	0x3b, r24	; 59
+					SET_BIT(MCUCSR_REG,MCUCSR_REG_ISC2_BITS);
      6cc:	84 b7       	in	r24, 0x34	; 52
      6ce:	80 64       	ori	r24, 0x40	; 64
      6d0:	84 bf       	out	0x34, r24	; 52
+					ret = E_OK;
      6d2:	11 e0       	ldi	r17, 0x01	; 1
      6d4:	01 c0       	rjmp	.+2      	; 0x6d8 <EXT_vINTERRUPT_Init+0x132>
+				}
+				else
+				{
+					ret = E_NOT_OK;
      6d6:	10 e0       	ldi	r17, 0x00	; 0
+				}
+				EXT_INTERRUPT_SetInterruptHandler(EXT_INTx);
      6d8:	ce 01       	movw	r24, r28
      6da:	0e 94 b6 02 	call	0x56c	; 0x56c <EXT_INTERRUPT_SetInterruptHandler>
+				break;
      6de:	03 c0       	rjmp	.+6      	; 0x6e6 <EXT_vINTERRUPT_Init+0x140>
+{
+	Std_ReturnType ret = E_NOT_OK;
+
+	if(PTR_NULL == EXT_INTx)
+	{
+		ret = E_NOT_OK;
      6e0:	10 e0       	ldi	r17, 0x00	; 0
      6e2:	01 c0       	rjmp	.+2      	; 0x6e6 <EXT_vINTERRUPT_Init+0x140>
+}
+
+
+Std_ReturnType EXT_vINTERRUPT_Init(const  ST_EXT_INTERRUPTS_CFG *EXT_INTx)
+{
+	Std_ReturnType ret = E_NOT_OK;
      6e4:	10 e0       	ldi	r17, 0x00	; 0
+				break;
+			}
+		}
+	}
+	return ret;
+}
      6e6:	81 2f       	mov	r24, r17
      6e8:	df 91       	pop	r29
      6ea:	cf 91       	pop	r28
@@ -905,6 +1357,10 @@ Disassembly of section .text:
      6ee:	08 95       	ret
 
 000006f0 <__vector_1>:
+
+
+ISR(EXT_INT0)
+{
      6f0:	1f 92       	push	r1
      6f2:	0f 92       	push	r0
      6f4:	0f b6       	in	r0, 0x3f	; 63
@@ -922,9 +1378,11 @@ Disassembly of section .text:
      70c:	bf 93       	push	r27
      70e:	ef 93       	push	r30
      710:	ff 93       	push	r31
+	INT0_InterruptHandler();
      712:	e0 91 8d 00 	lds	r30, 0x008D	; 0x80008d <INT0_InterruptHandler>
      716:	f0 91 8e 00 	lds	r31, 0x008E	; 0x80008e <INT0_InterruptHandler+0x1>
      71a:	09 95       	icall
+}
      71c:	ff 91       	pop	r31
      71e:	ef 91       	pop	r30
      720:	bf 91       	pop	r27
@@ -944,6 +1402,8 @@ Disassembly of section .text:
      73c:	18 95       	reti
 
 0000073e <__vector_2>:
+ISR(EXT_INT1)
+{
      73e:	1f 92       	push	r1
      740:	0f 92       	push	r0
      742:	0f b6       	in	r0, 0x3f	; 63
@@ -961,9 +1421,11 @@ Disassembly of section .text:
      75a:	bf 93       	push	r27
      75c:	ef 93       	push	r30
      75e:	ff 93       	push	r31
+	INT1_InterruptHandler();
      760:	e0 91 8b 00 	lds	r30, 0x008B	; 0x80008b <INT1_InterruptHandler>
      764:	f0 91 8c 00 	lds	r31, 0x008C	; 0x80008c <INT1_InterruptHandler+0x1>
      768:	09 95       	icall
+}
      76a:	ff 91       	pop	r31
      76c:	ef 91       	pop	r30
      76e:	bf 91       	pop	r27
@@ -983,6 +1445,8 @@ Disassembly of section .text:
      78a:	18 95       	reti
 
 0000078c <__vector_3>:
+ISR(EXT_INT2)
+{
      78c:	1f 92       	push	r1
      78e:	0f 92       	push	r0
      790:	0f b6       	in	r0, 0x3f	; 63
@@ -1000,9 +1464,11 @@ Disassembly of section .text:
      7a8:	bf 93       	push	r27
      7aa:	ef 93       	push	r30
      7ac:	ff 93       	push	r31
+	INT2_InterruptHandler();
      7ae:	e0 91 89 00 	lds	r30, 0x0089	; 0x800089 <INT2_InterruptHandler>
      7b2:	f0 91 8a 00 	lds	r31, 0x008A	; 0x80008a <INT2_InterruptHandler+0x1>
      7b6:	09 95       	icall
+}
      7b8:	ff 91       	pop	r31
      7ba:	ef 91       	pop	r30
      7bc:	bf 91       	pop	r27
@@ -1022,12 +1488,24 @@ Disassembly of section .text:
      7d8:	18 95       	reti
 
 000007da <MCU_vEnableInterrupt>:
+
+#include"MCU_Interface.h"
+
+void MCU_vEnableInterrupt(void)
+{
+	SET_BIT(SREG_REG,7);
      7da:	8f b7       	in	r24, 0x3f	; 63
      7dc:	80 68       	ori	r24, 0x80	; 128
      7de:	8f bf       	out	0x3f, r24	; 63
      7e0:	08 95       	ret
 
 000007e2 <TIMER_TMR2NormalModeInit>:
+
+void TIMER_tmr0deinit(void)
+{
+	TIMER_timer0Stop();
+	//* Disable the interrupt for timer1 overflow.*//*
+	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE0_BIT);
      7e2:	88 23       	and	r24, r24
      7e4:	19 f0       	breq	.+6      	; 0x7ec <TIMER_TMR2NormalModeInit+0xa>
      7e6:	81 30       	cpi	r24, 0x01	; 1
@@ -1261,23 +1739,50 @@ Disassembly of section .text:
      9cc:	08 95       	ret
 
 000009ce <TIMER_tmr2deinit>:
+
+
+
+void TIMER_tmr2deinit(void)
+{
+	TMR_TMR2Stop();
      9ce:	0e 94 dd 04 	call	0x9ba	; 0x9ba <TMR_TMR2Stop>
+	//* Disable the interrupt for timer1 overflow.*//*
+	CLEAR_BIT(TMR_U8_TIMSK_REG, TMR_U8_TOIE2_BIT);
      9d2:	89 b7       	in	r24, 0x39	; 57
      9d4:	8f 7b       	andi	r24, 0xBF	; 191
      9d6:	89 bf       	out	0x39, r24	; 57
      9d8:	08 95       	ret
 
 000009da <TMR_ovfSetCallback>:
+* @param void_a_pfOvfInterruptAction Pointer to the function to be called on TMR overflow interrupt
+* @return EN_TMR_ERROR_T Returns TMR_OK if callback function is set successfully, else returns TMR_ERROR
+*/
+EN_TIMER_ERROR_T TMR_ovfSetCallback(void (*void_a_pfOvfInterruptAction)(void)) {
+	// Check if the Pointer to Function is not equal to NULL
+	if (void_a_pfOvfInterruptAction != PTR_NULL) {
      9da:	00 97       	sbiw	r24, 0x00	; 0
      9dc:	31 f0       	breq	.+12     	; 0x9ea <TMR_ovfSetCallback+0x10>
+		// Store the passed address of function ( in APP Layer ) through pointer to function ( OVFInterruptAction ) into Global Array of Pointers to Functions ( OVFInterruptsAction ) in the passed index ( TMRId ).
+		void_g_pfOvfInterruptAction = void_a_pfOvfInterruptAction;
      9de:	90 93 90 00 	sts	0x0090, r25	; 0x800090 <void_g_pfOvfInterruptAction+0x1>
      9e2:	80 93 8f 00 	sts	0x008F, r24	; 0x80008f <void_g_pfOvfInterruptAction>
+		return TIMER_OK;
      9e6:	80 e0       	ldi	r24, 0x00	; 0
      9e8:	08 95       	ret
+		} else {
+		return TIMER_ERROR;
      9ea:	81 e0       	ldi	r24, 0x01	; 1
+	}
+}
      9ec:	08 95       	ret
 
 000009ee <__vector_5>:
+*/
+//__attribute__((optimize("O0")))
+//ISR(TMR_ovfVect)
+
+ISR(TIM2_OVF_INT)
+{
      9ee:	1f 92       	push	r1
      9f0:	0f 92       	push	r0
      9f2:	0f b6       	in	r0, 0x3f	; 63
@@ -1295,23 +1800,31 @@ Disassembly of section .text:
      a0a:	bf 93       	push	r27
      a0c:	ef 93       	push	r30
      a0e:	ff 93       	push	r31
+	u16_g_overflow2Ticks++;
      a10:	80 91 95 00 	lds	r24, 0x0095	; 0x800095 <u16_g_overflow2Ticks>
      a14:	90 91 96 00 	lds	r25, 0x0096	; 0x800096 <u16_g_overflow2Ticks+0x1>
      a18:	01 96       	adiw	r24, 0x01	; 1
      a1a:	90 93 96 00 	sts	0x0096, r25	; 0x800096 <u16_g_overflow2Ticks+0x1>
      a1e:	80 93 95 00 	sts	0x0095, r24	; 0x800095 <u16_g_overflow2Ticks>
+	if (u16_g_overflow2Ticks >= u16_g_overflow2Numbers )
      a22:	20 91 93 00 	lds	r18, 0x0093	; 0x800093 <u16_g_overflow2Numbers>
      a26:	30 91 94 00 	lds	r19, 0x0094	; 0x800094 <u16_g_overflow2Numbers+0x1>
      a2a:	82 17       	cp	r24, r18
      a2c:	93 07       	cpc	r25, r19
      a2e:	60 f0       	brcs	.+24     	; 0xa48 <__vector_5+0x5a>
+	{
+		TMR_U8_TCNT2_REG = u16_g_tcnt2InitialVal;
      a30:	80 91 91 00 	lds	r24, 0x0091	; 0x800091 <u16_g_tcnt2InitialVal>
      a34:	84 bd       	out	0x24, r24	; 36
+		u16_g_overflow2Ticks = 0;
      a36:	10 92 96 00 	sts	0x0096, r1	; 0x800096 <u16_g_overflow2Ticks+0x1>
      a3a:	10 92 95 00 	sts	0x0095, r1	; 0x800095 <u16_g_overflow2Ticks>
+		void_g_pfOvfInterruptAction();
      a3e:	e0 91 8f 00 	lds	r30, 0x008F	; 0x80008f <void_g_pfOvfInterruptAction>
      a42:	f0 91 90 00 	lds	r31, 0x0090	; 0x800090 <void_g_pfOvfInterruptAction+0x1>
      a46:	09 95       	icall
+	}
+}
      a48:	ff 91       	pop	r31
      a4a:	ef 91       	pop	r30
      a4c:	bf 91       	pop	r27
@@ -1401,18 +1914,18 @@ Disassembly of section .text:
      b1a:	23 c0       	rjmp	.+70     	; 0xb62 <sos_init+0x52>
      b1c:	cb e7       	ldi	r28, 0x7B	; 123
      b1e:	d0 e0       	ldi	r29, 0x00	; 0
-     b20:	e9 81       	ldd	r30, Y+1	; 0x01
-     b22:	fa 81       	ldd	r31, Y+2	; 0x02
+     b20:	e8 81       	ld	r30, Y
+     b22:	f9 81       	ldd	r31, Y+1	; 0x01
      b24:	80 e0       	ldi	r24, 0x00	; 0
      b26:	90 e0       	ldi	r25, 0x00	; 0
      b28:	09 95       	icall
-     b2a:	e9 85       	ldd	r30, Y+9	; 0x09
-     b2c:	fa 85       	ldd	r31, Y+10	; 0x0a
+     b2a:	e8 85       	ldd	r30, Y+8	; 0x08
+     b2c:	f9 85       	ldd	r31, Y+9	; 0x09
      b2e:	84 e6       	ldi	r24, 0x64	; 100
      b30:	90 e0       	ldi	r25, 0x00	; 0
      b32:	09 95       	icall
-     b34:	eb 85       	ldd	r30, Y+11	; 0x0b
-     b36:	fc 85       	ldd	r31, Y+12	; 0x0c
+     b34:	ea 85       	ldd	r30, Y+10	; 0x0a
+     b36:	fb 85       	ldd	r31, Y+11	; 0x0b
      b38:	85 e3       	ldi	r24, 0x35	; 53
      b3a:	95 e0       	ldi	r25, 0x05	; 5
      b3c:	09 95       	icall
@@ -1552,8 +2065,8 @@ void sos_run(void)
      c0e:	10 92 79 00 	sts	0x0079, r1	; 0x800079 <gl_running_state>
 		// start the timer
 		gl_str_sos_helpers.str_sos_timer_functions.ptr_timer_start();
-     c12:	e0 91 80 00 	lds	r30, 0x0080	; 0x800080 <gl_str_sos_helpers+0x5>
-     c16:	f0 91 81 00 	lds	r31, 0x0081	; 0x800081 <gl_str_sos_helpers+0x6>
+     c12:	e0 91 7f 00 	lds	r30, 0x007F	; 0x80007f <gl_str_sos_helpers+0x4>
+     c16:	f0 91 80 00 	lds	r31, 0x0080	; 0x800080 <gl_str_sos_helpers+0x5>
      c1a:	09 95       	icall
 
 		while(1)
@@ -1726,8 +2239,8 @@ void sos_disable(void)
      d10:	10 92 9d 00 	sts	0x009D, r1	; 0x80009d <gl_ticks_counter+0x6>
      d14:	10 92 9e 00 	sts	0x009E, r1	; 0x80009e <gl_ticks_counter+0x7>
 		gl_str_sos_helpers.str_sos_timer_functions.ptr_timer_stop();
-     d18:	e0 91 82 00 	lds	r30, 0x0082	; 0x800082 <gl_str_sos_helpers+0x7>
-     d1c:	f0 91 83 00 	lds	r31, 0x0083	; 0x800083 <gl_str_sos_helpers+0x8>
+     d18:	e0 91 81 00 	lds	r30, 0x0081	; 0x800081 <gl_str_sos_helpers+0x6>
+     d1c:	f0 91 82 00 	lds	r31, 0x0082	; 0x800082 <gl_str_sos_helpers+0x7>
      d20:	09 95       	icall
      d22:	08 95       	ret
 

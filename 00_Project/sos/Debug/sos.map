@@ -131,7 +131,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x18 MCAL/timer/timer_config.o
  .debug_line    0x00000000       0x4c MCAL/timer/timer_config.o
- .debug_str     0x00000000      0x4e5 MCAL/timer/timer_config.o
+ .debug_str     0x00000000      0x4b3 MCAL/timer/timer_config.o
  .comment       0x00000000       0x31 MCAL/timer/timer_config.o
  .text          0x00000000        0x0 SERVICES/sos/sos_config.o
  .data          0x00000000        0x0 SERVICES/sos/sos_config.o
@@ -805,10 +805,11 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.gl_str_sos_helpers
-                0x0080007b        0xd SERVICES/sos/sos_config.o
+                0x0080007b        0xc SERVICES/sos/sos_config.o
                 0x0080007b                gl_str_sos_helpers
  *(.gnu.linkonce.r*)
                 0x00800088                . = ALIGN (0x2)
+ *fill*         0x00800087        0x1 
                 0x00800088                _edata = .
                 0x00800088                PROVIDE (__data_end, .)
 
@@ -963,7 +964,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x28d7
+.debug_info     0x00000000     0x2867
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6      0x4c6 APPLICATION/app/app.o
@@ -976,10 +977,10 @@ END GROUP
  .debug_info    0x00001a07      0x446 MCAL/exti/exti_prog.o
  .debug_info    0x00001e4d       0x98 MCAL/mcu_cfg/mcu_Prog.o
  .debug_info    0x00001ee5      0x333 MCAL/timer/timer.o
- .debug_info    0x00002218      0x17d SERVICES/sos/sos_config.o
- .debug_info    0x00002395      0x542 SERVICES/sos/sos_program.o
+ .debug_info    0x00002218      0x145 SERVICES/sos/sos_config.o
+ .debug_info    0x0000235d      0x50a SERVICES/sos/sos_program.o
 
-.debug_abbrev   0x00000000     0x1057
+.debug_abbrev   0x00000000     0x103f
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_abbrev  0x000004a3      0x142 APPLICATION/app/app.o
@@ -992,24 +993,24 @@ END GROUP
  .debug_abbrev  0x00000af6      0x15c MCAL/exti/exti_prog.o
  .debug_abbrev  0x00000c52       0x51 MCAL/mcu_cfg/mcu_Prog.o
  .debug_abbrev  0x00000ca3      0x152 MCAL/timer/timer.o
- .debug_abbrev  0x00000df5       0xa6 SERVICES/sos/sos_config.o
- .debug_abbrev  0x00000e9b      0x1bc SERVICES/sos/sos_program.o
+ .debug_abbrev  0x00000df5       0x8e SERVICES/sos/sos_config.o
+ .debug_abbrev  0x00000e83      0x1bc SERVICES/sos/sos_program.o
 
-.debug_line     0x00000000     0x17a5
+.debug_line     0x00000000     0x169a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000116      0x254 APPLICATION/app/app.o
- .debug_line    0x0000036a      0x1d7 COMMON/system.o
- .debug_line    0x00000541      0x106 ECUAL/h_exti/h_exti.o
- .debug_line    0x00000647      0x163 ECUAL/led/led_prog.o
- .debug_line    0x000007aa      0x172 ECUAL/push_button/PB_prog.o
- .debug_line    0x0000091c       0x63 main.o
- .debug_line    0x0000097f      0x298 MCAL/dio/dio.o
- .debug_line    0x00000c17      0x403 MCAL/exti/exti_prog.o
- .debug_line    0x0000101a       0x7a MCAL/mcu_cfg/mcu_Prog.o
- .debug_line    0x00001094      0x315 MCAL/timer/timer.o
- .debug_line    0x000013a9       0x76 SERVICES/sos/sos_config.o
- .debug_line    0x0000141f      0x386 SERVICES/sos/sos_program.o
+ .debug_line    0x00000116      0x1be APPLICATION/app/app.o
+ .debug_line    0x000002d4      0x19b COMMON/system.o
+ .debug_line    0x0000046f      0x106 ECUAL/h_exti/h_exti.o
+ .debug_line    0x00000575      0x163 ECUAL/led/led_prog.o
+ .debug_line    0x000006d8      0x172 ECUAL/push_button/PB_prog.o
+ .debug_line    0x0000084a       0x63 main.o
+ .debug_line    0x000008ad      0x298 MCAL/dio/dio.o
+ .debug_line    0x00000b45      0x403 MCAL/exti/exti_prog.o
+ .debug_line    0x00000f48       0x7a MCAL/mcu_cfg/mcu_Prog.o
+ .debug_line    0x00000fc2      0x315 MCAL/timer/timer.o
+ .debug_line    0x000012d7       0x63 SERVICES/sos/sos_config.o
+ .debug_line    0x0000133a      0x360 SERVICES/sos/sos_program.o
 
 .debug_frame    0x00000000      0x580
  *(.debug_frame)
@@ -1025,33 +1026,33 @@ END GROUP
  .debug_frame   0x00000390       0xf0 MCAL/timer/timer.o
  .debug_frame   0x00000480      0x100 SERVICES/sos/sos_program.o
 
-.debug_str      0x00000000     0x11ff
+.debug_str      0x00000000     0x114b
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x540 APPLICATION/app/app.o
-                                0x590 (size before relaxing)
- .debug_str     0x000006d6      0x27a COMMON/system.o
-                                0x637 (size before relaxing)
- .debug_str     0x00000950       0x59 ECUAL/h_exti/h_exti.o
-                                0x350 (size before relaxing)
- .debug_str     0x000009a9       0x84 ECUAL/led/led_prog.o
-                                0x34f (size before relaxing)
- .debug_str     0x00000a2d       0x5d ECUAL/push_button/PB_prog.o
-                                0x406 (size before relaxing)
- .debug_str     0x00000a8a       0x11 main.o
-                                0x1b9 (size before relaxing)
- .debug_str     0x00000a9b       0x67 MCAL/dio/dio.o
-                                0x365 (size before relaxing)
- .debug_str     0x00000b02      0x1c7 MCAL/exti/exti_prog.o
-                                0x4f5 (size before relaxing)
- .debug_str     0x00000cc9       0x1b MCAL/mcu_cfg/mcu_Prog.o
-                                0x1d7 (size before relaxing)
- .debug_str     0x00000ce4      0x24a MCAL/timer/timer.o
-                                0x402 (size before relaxing)
- .debug_str     0x00000f2e      0x12c SERVICES/sos/sos_config.o
-                                0x2d3 (size before relaxing)
- .debug_str     0x0000105a      0x1a5 SERVICES/sos/sos_program.o
-                                0x5a2 (size before relaxing)
+ .debug_str     0x00000196      0x50e APPLICATION/app/app.o
+                                0x55e (size before relaxing)
+ .debug_str     0x000006a4      0x27a COMMON/system.o
+                                0x605 (size before relaxing)
+ .debug_str     0x0000091e       0x59 ECUAL/h_exti/h_exti.o
+                                0x31e (size before relaxing)
+ .debug_str     0x00000977       0x84 ECUAL/led/led_prog.o
+                                0x31d (size before relaxing)
+ .debug_str     0x000009fb       0x5d ECUAL/push_button/PB_prog.o
+                                0x3d4 (size before relaxing)
+ .debug_str     0x00000a58       0x11 main.o
+                                0x187 (size before relaxing)
+ .debug_str     0x00000a69       0x67 MCAL/dio/dio.o
+                                0x333 (size before relaxing)
+ .debug_str     0x00000ad0      0x1c7 MCAL/exti/exti_prog.o
+                                0x4c3 (size before relaxing)
+ .debug_str     0x00000c97       0x1b MCAL/mcu_cfg/mcu_Prog.o
+                                0x1a5 (size before relaxing)
+ .debug_str     0x00000cb2      0x24a MCAL/timer/timer.o
+                                0x3d0 (size before relaxing)
+ .debug_str     0x00000efc       0xe1 SERVICES/sos/sos_config.o
+                                0x256 (size before relaxing)
+ .debug_str     0x00000fdd      0x16e SERVICES/sos/sos_program.o
+                                0x55f (size before relaxing)
 
 .debug_loc      0x00000000     0x1937
  *(.debug_loc)

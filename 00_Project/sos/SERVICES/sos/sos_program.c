@@ -5,11 +5,11 @@
  *  Author: sharpel
  */ 
 
-#include "../../COMMON/std_types.h"
-#include "../../MCAL/timer/timer_interface.h"
+#include "std_types.h"
+#include "timer_interface.h"
 #include "sos_config.h"
 #include "sos_interface.h"
-#include "../../MCAL/dio/dio.h"
+#include "dio.h"
 
 // sos config struct (contain selected timer data)
 extern const str_sos_helpers_t gl_str_sos_helpers;
@@ -109,19 +109,19 @@ enu_system_status_t sos_deinit(void)
 	return enu_system_status_retval;
 }
 
-enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id,str_tasks_t *ptr_str_task)
+enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id,str_tasks_t *str_tasks_parameters)
 {
 	enu_system_status_t enu_system_status_retval = SOS_STATUS_SUCCESS;	
 	
 	// check on args null pointers
-	if((ptr_str_task == PTR_NULL) || (ptr_str_task->ptr_task_ref ==PTR_NULL))
+	if((str_tasks_parameters == PTR_NULL) || (str_tasks_parameters->ptr_task_ref ==PTR_NULL))
 	{
 	   enu_system_status_retval = SOS_NULL_ARGS;
 	}
 	else 
 	{
 		// check on unknown periodicity
-		if(ptr_str_task->taskPeriodicity == STR_NULL)
+		if(str_tasks_parameters->taskPeriodicity == STR_NULL)
 		{
 			enu_system_status_retval = SOS_TASK_PERIODICITY_UNKNOWN;
 		}
@@ -131,9 +131,9 @@ enu_system_status_t sos_create_task(enu_task_priority_id_t enu_task_priority_id,
 			if((gl_tasks_db[enu_task_priority_id] == PTR_NULL) && (enu_task_priority_id < PRIORITY_TOTAL))
 			{
 				// store address of task struct in db with chosen priority (priority here will be task index in db )
-				 gl_tasks_db[enu_task_priority_id]  = ptr_str_task;
+				 gl_tasks_db[enu_task_priority_id]  = str_tasks_parameters;
 				 /*Update The Hyper Period */
-				 gl_hyper_period *= ptr_str_task->taskPeriodicity; 
+				 gl_hyper_period *= str_tasks_parameters->taskPeriodicity; 
 			}
 			
 			else
@@ -177,19 +177,19 @@ enu_system_status_t sos_delete_task(enu_task_priority_id_t enu_task_priority_id)
 	return enu_system_status_retval;
 
 }
-enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id,str_tasks_t *ptr_str_task)
+enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id,str_tasks_t *str_tasks_parameters)
 {
 	enu_system_status_t enu_system_status_retval = SOS_STATUS_SUCCESS;
 	
 	// check on args null pointers
-	if((ptr_str_task == PTR_NULL) || (ptr_str_task->ptr_task_ref ==PTR_NULL) )
+	if((str_tasks_parameters == PTR_NULL) || (str_tasks_parameters->ptr_task_ref ==PTR_NULL) )
 	{
 		enu_system_status_retval = SOS_NULL_ARGS;
 	}
 	else
 	{
 		// check on unknown periodicity
-		if(ptr_str_task->taskPeriodicity == STR_NULL)
+		if(str_tasks_parameters->taskPeriodicity == STR_NULL)
 		{
 			enu_system_status_retval = SOS_TASK_PERIODICITY_UNKNOWN;
 		}
@@ -199,11 +199,11 @@ enu_system_status_t sos_modify_task(enu_task_priority_id_t enu_task_priority_id,
 			if((gl_tasks_db[enu_task_priority_id] != PTR_NULL) && (enu_task_priority_id < PRIORITY_TOTAL))
 			{
 				/*remove old periodicity from The Hyper Period */
-				gl_hyper_period /= ptr_str_task->taskPeriodicity;
+				gl_hyper_period /= str_tasks_parameters->taskPeriodicity;
 				
-				gl_tasks_db[enu_task_priority_id]   = ptr_str_task;
+				gl_tasks_db[enu_task_priority_id]   = str_tasks_parameters;
 				/*Update The Hyper Period */
-				gl_hyper_period *= ptr_str_task->taskPeriodicity;
+				gl_hyper_period *= str_tasks_parameters->taskPeriodicity;
 			}
 			
 			else

@@ -9,7 +9,7 @@
 #ifndef APP_H_
 #define APP_H_
 
-#include "../../COMMON/system.h"
+#include "system.h"
 
 
 extern ST_led_t gl_str_led_task1;

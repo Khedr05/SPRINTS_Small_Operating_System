@@ -11,10 +11,10 @@
 
 
 #include "std_types.h"
-#include "../SERVICES/sos/sos_interface.h"
-#include "../ECUAL/h_exti/h_exti.h"
-#include "../ECUAL/led/led_interface.h"
-#include "../ECUAL/push_button/PB_interface.h"
+#include "sos_interface.h"
+#include "h_exti.h"
+#include "led_interface.h"
+#include "PB_interface.h"
 
 typedef enum
 {
